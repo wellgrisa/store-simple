@@ -1,0 +1,57 @@
+body{
+	overflow-x: hidden;
+  .bravi-logo{
+  	margin: 0 auto;
+  	height: 50px;
+  }
+	.brand-logo{
+		margin-left: 10px;
+	}
+
+	h1 { color: #ffffff; font-family: 'Lato', sans-serif; font-size: 54px; font-weight: 300; line-height: 58px; margin: 0 0 58px; }
+
+	p.quote-paragraph{
+			color: #fff;
+	    font-family: "Adobe Caslon Pro","Hoefler Text",Georgia,Garamond,Times,serif;
+	    letter-spacing: 0.1em;
+	    width: 300px;
+	    text-align: center;
+	    margin: 40px auto;
+	    text-transform: lowercase;
+	    line-height: 145%;
+	    font-size: 14pt;
+	    font-variant: small-caps;
+	}
+
+	label.quote-who{
+		font-style: normal;
+    font-variant: small-caps;
+    text-decoration: none;
+    font-family: "Adobe Caslon Pro","Hoefler Text",Georgia,Garamond,Times,serif;
+    color: #afafaf;
+    font-size: 14px;
+	}
+
+	.quote-box{
+		text-align: center;
+		span{
+			color: #fff;
+		}
+
+		.glyphicon-refresh{
+			float: left;
+		}
+
+		.glyphicon-plus{
+			float: right;
+		}
+	}
+
+	.visible {
+		display: block;
+	}
+
+	.invisible {
+		display: none;
+	}
+}
