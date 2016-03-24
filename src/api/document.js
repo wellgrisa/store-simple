@@ -1,12 +1,15 @@
-import loki from 'lokijs';
-
-
+import db from '../data/db'
 
 export function save(document){
-  const db = new loki('store-simple-db');
+  const _documents = db.getCollection('documents')
+    ? db.getCollection('documents')
+    : db.addCollection('documents')
 
-  const documents = db.addCollections('documents');
-  debugger;
-  console.log('passeiaqui');
-  return documents.insert(document);
+  return _documents.insert(document);
+}
+
+export function getAll(){
+  return db.getCollection('documents')
+    ? db.getCollection('documents').data
+    : [];
 }

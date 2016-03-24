@@ -1,25 +1,53 @@
 import React, { Component, PropTypes } from 'react';
 import TextField from 'material-ui/lib/text-field';
 import FlatButton from 'material-ui/lib/flat-button';
-import { save } from '../../actions/document';
+import List from 'material-ui/lib/lists/list';
+import ListItem from 'material-ui/lib/lists/list-item';
+import Divider from 'material-ui/lib/divider';
+import Colors from 'material-ui/lib/styles/colors';
+import Avatar from 'material-ui/lib/avatar';
+import { save, getAll } from '../../actions/document';
 import { connect } from 'react-redux';
 
-const mapStateToProps = (state) =>
+const mapStateToProps = (reducers) =>
 {
   return {
-    document : state.document
+    document : reducers.document
   }
 };
 
 class Home extends Component {
+  componentWillMount (){
+    this.props.dispatch(getAll());
+  }
   onSave (document) {
-    this.props.dispatch(save({ name : this.refs.test.getValue() }));
+    this.props.dispatch(getAll());
+  }
+  renderDocuments() {
+    return this.props.document.items.map(x => <label>{x.name}</label>);
   }
   render () {
     return (
       <div className='container'>
+
         <TextField ref='test' hintText="Nome"/>
         <FlatButton label="Save" onClick={::this.onSave} />
+        <label>{this.props.document.name}</label>
+        {this.renderDocuments()}
+        <List>
+          <ListItem
+            leftAvatar={
+              <Avatar
+                color={Colors.pinkA200} backgroundColor={Colors.transparent}
+                style={{left: 8}}
+              >
+                A
+              </Avatar>
+            }
+            primaryText="Chelsea Otakan"
+          />
+        </List>
+
       </div>
     );
   }

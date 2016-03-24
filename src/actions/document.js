@@ -17,34 +17,13 @@ export function adding() {
 }
 
 export function success(document) {
-  return { type: FETCH_SUCCESS, document : documentApi.save(document) }
+  return { type: ADD, document : document }
 }
 
 export function save(document) {
-  return (dispatch) => {
-    dispatch({ type: FETCH_REQUEST });
-
-    try {
-      dispatch(success(document));
-    } catch (error) {
-      dispatch({ type: FETCH_FAIL, error });
-    }
-  };
+  return success(documentApi.save(document));
 }
 
-export function getQuotes(){
-  return { type: GET_QUOTES, quotes: quoteApi.getAll() }
-}
-
-export function getAll() {
-//  return { type: ACTIONS.GET_QUOTES, quotes : quotes }
-  return (dispatch) => {
-    dispatch({ type: FETCH_QUOTE_REQUEST });
-
-    try {
-      dispatch(getQuotes());
-    } catch (error) {
-      dispatch({ type: FETCH_QUOTE_FAIL, error });
-    }
-  };
+export function getAll(){
+  return { type: ALL, items: documentApi.getAll() }
 }

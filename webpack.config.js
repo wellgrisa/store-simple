@@ -8,9 +8,7 @@ module.exports = {
         path: path.join(__dirname, 'static'),
         publicPath: 'http://localhost:8080/build/'
     },
-    node: {
-      fs: "empty"
-    },
+    target: 'electron',
     module: {
         loaders: [
           {
