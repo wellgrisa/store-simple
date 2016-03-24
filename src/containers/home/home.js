@@ -21,10 +21,15 @@ class Home extends Component {
     this.props.dispatch(getAll());
   }
   onSave (document) {
+    this.props.dispatch(save({ name : this.refs.test.getValue() }));
+  }
+  onRefresh () {
     this.props.dispatch(getAll());
   }
   renderDocuments() {
-    return this.props.document.items.map(x => <label>{x.name}</label>);
+    return this.props.document.items.map(x => <ListItem
+      primaryText={x.name}
+    />);
   }
   render () {
     return (
@@ -32,20 +37,10 @@ class Home extends Component {
 
         <TextField ref='test' hintText="Nome"/>
         <FlatButton label="Save" onClick={::this.onSave} />
-        <label>{this.props.document.name}</label>
-        {this.renderDocuments()}
+        <FlatButton label="Refresh" onClick={::this.onRefresh} />
+
         <List>
-          <ListItem
-            leftAvatar={
-              <Avatar
-                color={Colors.pinkA200} backgroundColor={Colors.transparent}
-                style={{left: 8}}
-              >
-                A
-              </Avatar>
-            }
-            primaryText="Chelsea Otakan"
-          />
+          {this.renderDocuments()}
         </List>
 
       </div>
