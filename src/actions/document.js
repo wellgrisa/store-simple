@@ -25,5 +25,13 @@ export function save(document) {
 }
 
 export function getAll(){
-  return { type: ALL, items: documentApi.getAll() }
+  return async (dispatch) => {
+    dispatch({ type: FETCH_REQUEST });
+
+    try {
+      dispatch({ type: ALL, items: await documentApi.getAll() });
+    } catch (error) {
+      dispatch({ type: FETCH_FAIL, error });
+    }
+  };
 }

@@ -9,21 +9,28 @@ import { ADD } from '../actions/document';
 
 const INITIAL_STATE = {
   name : '',
-  items : []
+  items : [],
+  isLoading : false
 };
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case ADD:
-      state.items.push(action.document);
       return {
         ...state,
-        name : action.document.name
+        items : [...state.items, action.document]
       };
     case ALL:
       return {
         ...state,
         items : action.items,
+        isLoading : false,
+      };
+    case FETCH_REQUEST:
+      console.log(FETCH_REQUEST);
+      return {
+        ...state,
+        isLoading : true,
       };
   }
   return state

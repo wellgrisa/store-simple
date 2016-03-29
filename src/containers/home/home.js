@@ -6,6 +6,7 @@ import ListItem from 'material-ui/lib/lists/list-item';
 import Divider from 'material-ui/lib/divider';
 import Colors from 'material-ui/lib/styles/colors';
 import Avatar from 'material-ui/lib/avatar';
+import CircularProgress from 'material-ui/lib/circular-progress';
 import { save, getAll } from '../../actions/document';
 import { connect } from 'react-redux';
 
@@ -31,14 +32,18 @@ class Home extends Component {
       primaryText={x.name}
     />);
   }
+  renderProgress(){
+    if(this.props.document.isLoading){
+      return <CircularProgress />;
+    }
+  }
   render () {
     return (
       <div className='container'>
-
+        {this.renderProgress()}
         <TextField ref='test' hintText="Nome"/>
         <FlatButton label="Save" onClick={::this.onSave} />
         <FlatButton label="Refresh" onClick={::this.onRefresh} />
-
         <List>
           {this.renderDocuments()}
         </List>

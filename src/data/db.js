@@ -1,12 +1,15 @@
-import loki from 'lokijs';
+import Datastore from 'nedb';
+import path from 'path';
 
-var _db = new loki('src/data/store-simple-db.json',
-{
-  autosave: true,
-  autosaveInterval: 10000,
-  autoload: true
-});
+import config from '../config';
 
-_db.loadDatabase();
+const DB_PATH = config.development.db
 
-export default _db;
+export default function Store(name) {
+  let store = new Datastore({
+    filename: path.join(DB_PATH, `${name}.json`),
+    autoload: true
+  })
+
+  return store;
+}

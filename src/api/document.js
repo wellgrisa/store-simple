@@ -1,15 +1,12 @@
-import db from '../data/db'
+import { documents } from '../data';
+import datastore from 'nedb-promise'
 
 export function save(document){
-  const _documents = db.getCollection('documents')
-    ? db.getCollection('documents')
-    : db.addCollection('documents')
+  documents.insert(document);
 
-  return _documents.insert(document);
+  return document;
 }
 
-export function getAll(){
-  return db.getCollection('documents')
-    ? db.getCollection('documents').data
-    : [];
+export async function getAll(){
+  return await datastore.fromInstance(documents).find({});
 }
