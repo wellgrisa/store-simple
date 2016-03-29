@@ -7,7 +7,7 @@ import Divider from 'material-ui/lib/divider';
 import Colors from 'material-ui/lib/styles/colors';
 import Avatar from 'material-ui/lib/avatar';
 import CircularProgress from 'material-ui/lib/circular-progress';
-import { save, getAll } from '../../actions/document';
+import { add, getAll } from '../../actions/document';
 import { connect } from 'react-redux';
 
 const mapStateToProps = (reducers) =>
@@ -22,13 +22,13 @@ class Home extends Component {
     this.props.dispatch(getAll());
   }
   onSave (document) {
-    this.props.dispatch(save({ name : this.refs.test.getValue() }));
+    this.props.dispatch(add({ name : this.refs.test.getValue() }));
   }
   onRefresh () {
     this.props.dispatch(getAll());
   }
   renderDocuments() {
-    return this.props.document.items.map(x => <ListItem
+    return this.props.document.items.map(x => <ListItem key={x._id}
       primaryText={x.name}
     />);
   }
@@ -43,11 +43,9 @@ class Home extends Component {
         {this.renderProgress()}
         <TextField ref='test' hintText="Nome"/>
         <FlatButton label="Save" onClick={::this.onSave} />
-        <FlatButton label="Refresh" onClick={::this.onRefresh} />
         <List>
           {this.renderDocuments()}
         </List>
-
       </div>
     );
   }

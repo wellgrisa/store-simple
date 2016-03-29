@@ -20,8 +20,10 @@ export function success(document) {
   return { type: ADD, document : document }
 }
 
-export function save(document) {
-  return success(documentApi.save(document));
+export function add(document) {
+  return async (dispatch) => {
+      dispatch({ type: ADD, document : await documentApi.save(document) });
+  }
 }
 
 export function getAll(){
