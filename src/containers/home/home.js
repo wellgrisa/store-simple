@@ -21,8 +21,8 @@ class Home extends Component {
   componentWillMount (){
     this.props.dispatch(getAll());
   }
-  onSave (document) {
-    this.props.dispatch(add({ name : this.refs.test.getValue() }));
+  onSave () {
+    this.props.dispatch(add({ name : this.name.getValue() }));
   }
   onRefresh () {
     this.props.dispatch(getAll());
@@ -41,7 +41,9 @@ class Home extends Component {
     return (
       <div className='container'>
         {this.renderProgress()}
-        <TextField ref='test' hintText="Nome"/>
+        <TextField ref={node => {
+          this.name = node;
+        }} hintText="Nome"/>
         <FlatButton label="Save" onClick={::this.onSave} />
         <List>
           {this.renderDocuments()}

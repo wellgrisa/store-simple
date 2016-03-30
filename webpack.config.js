@@ -45,7 +45,7 @@ module.exports = {
         'Hammer': 'hammerjs/hammer',
       }),
       new webpack.DefinePlugin({
-        'process.env.NODE_ENV': '"development"'
+        WELL: true,
       }),
     ],
     resolve: {

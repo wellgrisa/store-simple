@@ -13,7 +13,7 @@
   </body>
   <script>
     (function() {
-      console.log(process.env.NODE_ENV)
+      console.log(process.env.WELL)
       const script = document.createElement('script');
       script.src = (process.env.NODE_ENV === 'development') ? 'http://localhost:8080/build/bundle.js' : './static/bundle.js';
       document.write(script.outerHTML);
