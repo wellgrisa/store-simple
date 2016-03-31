@@ -9,15 +9,23 @@ import Avatar from 'material-ui/lib/avatar';
 import CircularProgress from 'material-ui/lib/circular-progress';
 import { add, getAll } from '../../actions/document';
 import { connect } from 'react-redux';
+import {reduxForm} from 'redux-form';
 
-const mapStateToProps = (reducers) =>
-{
-  return {
-    document : reducers.document
+export const fields = ['username'];
+
+const validate = values => {
+  const errors = {};
+  if (!values.username) {
+    errors.username = 'Esse campo é obrigatório';
+  } else if (values.username.length > 15) {
+    errors.username = 'Must be 15 characters or less';
   }
+
+  return errors;
 };
 
 class Home extends Component {
+
   componentWillMount (){
     this.props.dispatch(getAll());
   }
@@ -38,19 +46,40 @@ class Home extends Component {
     }
   }
   render () {
+    const { fields: { username } } = this.props;
+
     return (
+      <form>
       <div className='container'>
         {this.renderProgress()}
+
         <TextField ref={node => {
           this.name = node;
-        }} hintText="Nome"/>
+        }} hintText="Nome"
+        {...username}
+        errorText={username.touched && username.error ? username.error : ''}/>
+
         <FlatButton label="Save" onClick={::this.onSave} />
         <List>
           {this.renderDocuments()}
         </List>
       </div>
+      </form>
     );
   }
 }
 
-export default connect(mapStateToProps)(Home);
+const mapStateToProps = (reducers) =>
+{
+  return {
+    document : reducers.document
+  }
+};
+
+export default reduxForm({
+  form: 'synchronousValidation',
+  fields,
+  validate
+}, mapStateToProps)(Home);
+
+//export default connect(mapStateToProps)(Home);

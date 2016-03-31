@@ -25,14 +25,21 @@ module.exports = {
             loader: 'file',
           },
           {
-            test: /\.(png|jpg)$/,
-            loader: 'url-loader',
-            query: { mimetype: 'image/png' },
+            test: /\.(png|jpg|jpeg|gif|svg|mp4)$/,
+            loader: 'url-loader?limit=100000'
           },
           {
              test: /\.json$/,
              loader: "json-loader"
-          }
+          },
+          {
+            test: /\.less$/,
+            loader: 'style-loader!css-loader!less-loader'
+          },
+          {
+            test: /\.css$/,
+            loader: 'style-loader!css-loader'
+          },
         ]
     },
     plugins: [
