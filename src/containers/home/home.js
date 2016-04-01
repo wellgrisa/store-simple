@@ -81,5 +81,3 @@ export default reduxForm({
   fields,
   validate
 }, mapStateToProps)(Home);
-
-//export default connect(mapStateToProps)(Home);
