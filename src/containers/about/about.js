@@ -1,15 +1,13 @@
-import '../../style';
 import React from 'react';
-import querystring from 'querystring';
-import axios from 'axios';
-import cheerio from 'cheerio';
-import moment from 'moment';
-
+import { Link } from 'react-router';
 
 export default class About extends React.Component {
     render() {
         return <div className='login'>
-          Sobre
+          <h1>Sobre</h1>
+          <Link to="/">
+            <i className="fa fa-arrow-left fa-3x" />
+          </Link>
         </div>;
     }
 }

@@ -10,6 +10,8 @@ import { browserHistory } from 'react-router'
 import mui from 'material-ui';
 let AppBar = mui.AppBar
   , LeftNav = mui.LeftNav
+  , List = mui.List
+  , ListItem = mui.ListItem
   , MenuItem = mui.MenuItem;
 
 const menuitems = [
@@ -23,33 +25,31 @@ class App extends Component {
   static propTypes = {
       children: PropTypes.any.isRequired,
   }
-
   handleLinkClick(){
     this.props.pushState(null, '/about');
   }
-
   render () {
     return (
       <div>
-        <LeftNav
-          ref="leftNav"
-          width={200}
-          open={false}
-          docked={false}>
-          {menuitems.map(function(menuitem, i) {
-            return ( <MenuItem index={i} primaryText={menuitem.primaryText} value={menuitem.value} onClick={::this.handleLinkClick.bind(this, i)}/>
-              );
-          }, this) }
-        </LeftNav>
 
         <header>
           <AppBar title='MUI Routing' onLeftIconButtonTouchTap={this._handleClick} />
         </header>
 
-        <section>
-          {this.props.children}
-        </section>
-
+        <div className='col-xs-3'>
+          <List>
+           <ListItem primaryText="Inbox" />
+           <ListItem primaryText="Starred" />
+           <ListItem primaryText="Sent mail" />
+           <ListItem primaryText="Drafts" />
+           <ListItem primaryText="Inbox" />
+         </List>
+        </div>
+        <div className='col-xs-9'>
+          <section>
+            {this.props.children}
+          </section>
+        </div>
       </div>
     );
   }
