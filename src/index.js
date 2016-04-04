@@ -7,6 +7,10 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import routes from './routes';
 import configStore from './store'
 
+import injectTapEventPlugin from 'react-tap-event-plugin';
+
+injectTapEventPlugin();
+
 let store = configStore();
 
 const history = syncHistoryWithStore(hashHistory, store);

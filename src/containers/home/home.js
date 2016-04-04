@@ -10,8 +10,6 @@ import CircularProgress from 'material-ui/lib/circular-progress';
 import { add, getAll } from '../../actions/document';
 import { connect } from 'react-redux';
 import {reduxForm} from 'redux-form';
-import { Link } from 'react-router';
-import { push } from 'react-router-redux';
 
 export const fields = ['username'];
 
@@ -33,9 +31,6 @@ class Home extends Component {
   onSave () {
     this.props.dispatch(add({ name : this.name.getValue() }));
   }
-  onAbout () {
-    this.props.dispatch(push('/about'));
-  }
   onRefresh () {
     this.props.dispatch(getAll());
   }
@@ -56,9 +51,6 @@ class Home extends Component {
       <form>
       <div className='container'>
         {this.renderProgress()}
-        <Link to="/about">
-          <i className="fa fa-arrow-left fa-3x" />
-        </Link>
         <TextField ref={node => {
           this.name = node;
         }} hintText="Nome"
@@ -66,7 +58,6 @@ class Home extends Component {
         errorText={username.touched && username.error ? username.error : ''}/>
 
         <FlatButton label="Save" onClick={::this.onSave} />
-        <FlatButton label="About" onClick={::this.onAbout} />
         <List>
           {this.renderDocuments()}
         </List>

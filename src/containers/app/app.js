@@ -5,7 +5,8 @@ import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
 import DarkRawTheme from 'material-ui/lib/styles/raw-themes/dark-raw-theme';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router'
+import { browserHistory } from 'react-router';
+import { push } from 'react-router-redux';
 
 import mui from 'material-ui';
 let AppBar = mui.AppBar
@@ -15,9 +16,8 @@ let AppBar = mui.AppBar
   , MenuItem = mui.MenuItem;
 
 const menuitems = [
-  {primaryText: 'Survey', value: '/survey'},
-  {primaryText: 'Widgets', value: '/widgets'},
-  {primaryText: 'Home', value: '/'}
+  { primaryText: 'Inicio', value: '/'},
+  { primaryText: 'Sobre', value: '/about'}
 ];
 
 @ThemeDecorator(ThemeManager.getMuiTheme(DarkRawTheme))
@@ -25,9 +25,17 @@ class App extends Component {
   static propTypes = {
       children: PropTypes.any.isRequired,
   }
-  handleLinkClick(){
-    this.props.pushState(null, '/about');
+
+  handleLinkClick(path){
+    this.props.dispatch(push(path));
   }
+
+  renderMenuItems() {
+    return menuitems.map(x =>
+      <ListItem onTouchTap={::this.handleLinkClick.bind(this, x.value)} primaryText={x.primaryText} />
+    );
+  }
+
   render () {
     return (
       <div>
@@ -38,11 +46,7 @@ class App extends Component {
 
         <div className='col-xs-3'>
           <List>
-           <ListItem primaryText="Inbox" />
-           <ListItem primaryText="Starred" />
-           <ListItem primaryText="Sent mail" />
-           <ListItem primaryText="Drafts" />
-           <ListItem primaryText="Inbox" />
+           {this.renderMenuItems()}
          </List>
         </div>
         <div className='col-xs-9'>
