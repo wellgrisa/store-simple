@@ -8,25 +8,30 @@ export default class Selectable extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      selectedIndex: 1
+      value: 1
     };
   }
-  handleUpdateSelectedIndex(e, index) {
-    this.setState({
-      selectedIndex: index,
-    });
+
+  handleUpdateSelectedIndex(e, value) {
+    this.setState({ value });
   }
+
   renderMenuItems() {
     return this.props.items.map((x, i) =>
-      <ListItem value={i} primaryText={x.primaryText} />
+      <ListItem key={x.value} value={x.value} primaryText={x.primaryText} />
     );
   }
+
+  getValue() {
+    return this.state.value ? this.state.value : undefined;
+  }
+
   render() {
     return (
       <SelectableList
         {...this.props}
         {...this.state}
-        valueLink={{value: this.state.selectedIndex, requestChange: ::this.handleUpdateSelectedIndex}}
+        valueLink={{value: this.state.value, requestChange: ::this.handleUpdateSelectedIndex}}
       >
         {this.renderMenuItems()}
       </SelectableList>

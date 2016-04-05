@@ -27,8 +27,8 @@ class App extends Component {
   }
 
   renderMenuItems() {
-    return menuitems.map(x =>
-      <ListItem onTouchTap={::this.handleLinkClick.bind(this, x.value)} primaryText={x.primaryText} />
+    return menuitems.map((x, i) =>
+      <ListItem key={i} onTouchTap={::this.handleLinkClick.bind(this, x.value)} primaryText={x.primaryText} />
     );
   }
 

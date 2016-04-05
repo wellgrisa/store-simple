@@ -29,25 +29,35 @@ class Home extends Component {
   componentWillMount (){
     this.props.dispatch(getAll());
   }
+
   onSave () {
     this.props.dispatch(add({ name : this.name.getValue() }));
   }
+
   onRefresh () {
     this.props.dispatch(getAll());
   }
+
   renderDocuments() {
     const listItems = this.props.document.items.map(x => {
       return {
+        value : x._id,
         primaryText : x.name
       }
     });
-    return <SelectableList items={listItems}/>;
+
+    return <SelectableList
+      ref={ node => {
+          this.documentSelected = node
+        }}
+      items={listItems}/>;
   }
   renderProgress(){
     if(this.props.document.isLoading){
       return <CircularProgress />;
     }
   }
+  
   render () {
     const { fields: { username } } = this.props;
 
