@@ -5,15 +5,11 @@ import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
 import DarkRawTheme from 'material-ui/lib/styles/raw-themes/dark-raw-theme';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
 import { push } from 'react-router-redux';
 
-import mui from 'material-ui';
-let AppBar = mui.AppBar
-  , LeftNav = mui.LeftNav
-  , List = mui.List
-  , ListItem = mui.ListItem
-  , MenuItem = mui.MenuItem;
+import { AppBar, LeftNav, List, ListItem } from 'material-ui';
+
+import SelectableList from '../../components/SelectableList';
 
 const menuitems = [
   { primaryText: 'Inicio', value: '/'},
@@ -44,12 +40,12 @@ class App extends Component {
           <AppBar title='MUI Routing' onLeftIconButtonTouchTap={this._handleClick} />
         </header>
 
-        <div className='col-xs-3'>
+        <div className='col-xs-1'>
           <List>
            {this.renderMenuItems()}
          </List>
         </div>
-        <div className='col-xs-9'>
+        <div className='col-xs-11'>
           <section>
             {this.props.children}
           </section>

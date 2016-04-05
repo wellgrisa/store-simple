@@ -9,7 +9,8 @@ import Avatar from 'material-ui/lib/avatar';
 import CircularProgress from 'material-ui/lib/circular-progress';
 import { add, getAll } from '../../actions/document';
 import { connect } from 'react-redux';
-import {reduxForm} from 'redux-form';
+import { reduxForm } from 'redux-form';
+import SelectableList from '../../components/SelectableList';
 
 export const fields = ['username'];
 
@@ -35,9 +36,12 @@ class Home extends Component {
     this.props.dispatch(getAll());
   }
   renderDocuments() {
-    return this.props.document.items.map(x => <ListItem key={x._id}
-      primaryText={x.name}
-    />);
+    const listItems = this.props.document.items.map(x => {
+      return {
+        primaryText : x.name
+      }
+    });
+    return <SelectableList items={listItems}/>;
   }
   renderProgress(){
     if(this.props.document.isLoading){
@@ -53,14 +57,14 @@ class Home extends Component {
         {this.renderProgress()}
         <TextField ref={node => {
           this.name = node;
-        }} hintText="Nome"
-        {...username}
-        errorText={username.touched && username.error ? username.error : ''}/>
+          }}
+          hintText="Nome"
+          {...username}
+          errorText={username.error ? username.error : ''}
+        />
 
         <FlatButton label="Save" onClick={::this.onSave} />
-        <List>
-          {this.renderDocuments()}
-        </List>
+        {this.renderDocuments()}
       </div>
       </form>
     );
