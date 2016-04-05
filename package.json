@@ -50,6 +50,7 @@
     "moment": "^2.11.1",
     "nedb": "^1.8.0",
     "nedb-promise": "^2.0.0",
+    "react-addons-update": "^0.14.8",
     "react-materialize": "^0.14.2",
     "react-redux": "^4.0.6",
     "react-router": "^2.0.1",

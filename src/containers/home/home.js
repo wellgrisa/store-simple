@@ -7,10 +7,12 @@ import Divider from 'material-ui/lib/divider';
 import Colors from 'material-ui/lib/styles/colors';
 import Avatar from 'material-ui/lib/avatar';
 import CircularProgress from 'material-ui/lib/circular-progress';
-import { add, getAll } from '../../actions/document';
+import Checkbox from 'material-ui/lib/checkbox';
+import FontIcon from 'material-ui/lib/font-icon';
+import { add, getAll, remove, edit } from '../../actions/document';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
-import SelectableList from '../../components/SelectableList';
+import DocumentEditDialog from '../../components/document/edit';
 
 export const fields = ['username'];
 
@@ -34,33 +36,42 @@ class Home extends Component {
     this.props.dispatch(add({ name : this.name.getValue() }));
   }
 
+  onRemove () {
+    this.props.dispatch(remove(this.props.document.items.filter(x => x.selected)));
+  }
+
   onRefresh () {
     this.props.dispatch(getAll());
   }
 
+  onSelect (document) {
+    document.selected = !document.selected;
+  }
+
+  onEdit () {
+    this.props.dispatch(edit(this.props.document.items.find(x => x.selected)));
+  }
+
   renderDocuments() {
     const listItems = this.props.document.items.map(x => {
-      return {
-        value : x._id,
-        primaryText : x.name
-      }
+      return <ListItem
+        key={x._id}
+        primaryText={x.name}
+        leftCheckbox={<Checkbox onClick={::this.onSelect.bind(this, x)}/>} />
     });
 
-    return <SelectableList
-      ref={ node => {
-          this.documentSelected = node
-        }}
-      items={listItems}/>;
+    return <List>
+      {listItems}
+    </List>;
   }
   renderProgress(){
     if(this.props.document.isLoading){
       return <CircularProgress />;
     }
   }
-  
+
   render () {
     const { fields: { username } } = this.props;
-
     return (
       <form>
       <div className='container'>
@@ -74,6 +85,11 @@ class Home extends Component {
         />
 
         <FlatButton label="Save" onClick={::this.onSave} />
+        <FlatButton label="Remove" onClick={::this.onRemove} />
+        <FlatButton label="Edit" onClick={::this.onEdit} />
+        <DocumentEditDialog
+          open={this.props.document.showDialog}
+        />
         {this.renderDocuments()}
       </div>
       </form>
