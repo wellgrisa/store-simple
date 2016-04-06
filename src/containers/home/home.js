@@ -12,29 +12,14 @@ import FontIcon from 'material-ui/lib/font-icon';
 import { add, getAll, remove, edit } from '../../actions/document';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
-import DocumentEditDialog from '../../components/document/edit';
-
-export const fields = ['username'];
-
-const validate = values => {
-  const errors = {};
-  if (!values.username) {
-    errors.username = 'Esse campo é obrigatório';
-  } else if (values.username.length > 15) {
-    errors.username = 'Must be 15 characters or less';
-  }
-
-  return errors;
-};
+import { Form, Modal } from '../../components/document';
 
 class Home extends Component {
   componentWillMount (){
     this.props.dispatch(getAll());
   }
 
-  onSave () {
-    this.props.dispatch(add({ name : this.name.getValue() }));
-  }
+
 
   onRemove () {
     this.props.dispatch(remove(this.props.document.items.filter(x => x.selected)));
@@ -71,28 +56,16 @@ class Home extends Component {
   }
 
   render () {
-    const { fields: { username } } = this.props;
     return (
-      <form>
       <div className='container'>
         {this.renderProgress()}
-        <TextField ref={node => {
-          this.name = node;
-          }}
-          hintText="Nome"
-          {...username}
-          errorText={username.error ? username.error : ''}
-        />
-
-        <FlatButton label="Save" onClick={::this.onSave} />
         <FlatButton label="Remove" onClick={::this.onRemove} />
         <FlatButton label="Edit" onClick={::this.onEdit} />
-        <DocumentEditDialog
+        <Modal
           open={this.props.document.showDialog}
         />
         {this.renderDocuments()}
       </div>
-      </form>
     );
   }
 }
@@ -104,8 +77,4 @@ const mapStateToProps = (reducers) =>
   }
 };
 
-export default reduxForm({
-  form: 'synchronousValidation',
-  fields,
-  validate
-}, mapStateToProps)(Home);
+export default connect(mapStateToProps)(Home);
