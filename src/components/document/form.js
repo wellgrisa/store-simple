@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { fields, validate } from './validation';
 
-@reduxForm({ form : 'document', fields, validate})
+@reduxForm({ form : 'document', fields, validate }, reducers => ({
+  initialValues: reducers.document.selectedItem
+}))
 export default class Form extends React.Component {
   render () {
     const { fields: { name } } = this.props;
@@ -17,6 +19,7 @@ export default class Form extends React.Component {
               }}
               hintText="Nome"
               {...name}
+              defaultValue={this.props.name}
               errorText={name.error ? name.error : ''}
             />
           </div>

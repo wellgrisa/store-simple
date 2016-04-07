@@ -37,7 +37,7 @@ class DocumentForm extends React.Component {
           open={showDialog}
           onRequestClose={::this.handleClose}
         >
-          <Form ref='form' onSubmit={::this.handleSubmit} />
+          <Form {...selectedItem} ref='form' onSubmit={::this.handleSubmit} />
         </Dialog>
       </div>
     );
