@@ -1,6 +1,11 @@
 import { documents } from '../data';
 
 export async function save(document){
+
+  if(!document.createdDate){
+    document.createdDate = new Date();
+  }
+
   return await documents.insert(document);
 }
 

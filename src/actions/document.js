@@ -32,15 +32,13 @@ export function toggleShowDialog() {
 
 export function add(document) {
   return async (dispatch) => {
-      dispatch({ type: ADD, document : await documentApi.save(document) });
+    dispatch({ type: ADD, document : await documentApi.save(document) });
   }
 }
 
 export function remove(items) {
   return async (dispatch) => {
-
       documentApi.remove(items);
-
       dispatch({ type: ALL, items: await documentApi.getAll() });
   }
 }

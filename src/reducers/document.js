@@ -24,7 +24,7 @@ export default function reducer(state = INITIAL_STATE, action) {
     case ADD:
       return {
         ...state,
-        items : [...state.items, action.document]
+        items : [action.document, ...state.items]
       };
     case ALL:
       return {
