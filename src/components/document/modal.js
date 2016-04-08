@@ -4,7 +4,7 @@ import FlatButton from 'material-ui/lib/flat-button';
 import RaisedButton from 'material-ui/lib/raised-button';
 import DatePicker from 'material-ui/lib/date-picker/date-picker';
 import { connect } from 'react-redux';
-import { toggleShowDialog, add } from '../../actions/document'
+import { toggleShowDialog, add, save } from '../../actions/document'
 import Form from './form';
 import { getValues } from 'redux-form';
 
@@ -13,7 +13,11 @@ class DocumentForm extends React.Component {
     this.props.dispatch(toggleShowDialog());
   }
   handleSubmit = (data) => {
-    this.props.dispatch(add(data));
+    const { selectedItem } = this.props.document;
+    if(selectedItem){
+      data._id = selectedItem._id;
+    }
+    this.props.dispatch(save(data));
     this.props.dispatch(toggleShowDialog());
   }
   handleSave () {

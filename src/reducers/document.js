@@ -4,7 +4,8 @@ import {
   FETCH_FAIL,
   TOGGLE_SHOW_DIALOG,
   ALL,
-  EDIT
+  EDIT,
+  SAVE
 } from '../actions/document';
 
 import update from 'react-addons-update';
@@ -25,6 +26,21 @@ export default function reducer(state = INITIAL_STATE, action) {
       return {
         ...state,
         items : [action.document, ...state.items]
+      };
+    case SAVE:
+      let existentItemIndex = action.result[1]
+        ? state.items.findIndex(x => x._id === action.result[1]._id)
+        : -1;
+      let items = existentItemIndex === -1
+        ? [action.result, ...state.items]
+        : [
+            ...state.items.slice(0, existentItemIndex),
+            action.result[1],
+            ...state.items.slice(existentItemIndex + 1)
+          ]
+      return {
+        ...state,
+        items
       };
     case ALL:
       return {

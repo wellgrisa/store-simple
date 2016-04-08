@@ -1,12 +1,11 @@
 import { documents } from '../data';
 
 export async function save(document){
-
-  if(!document.createdDate){
-    document.createdDate = new Date();
+  if(!document._id){
+    return await documents.insert(document);
+  } else {
+    return await documents.update({ _id : document._id }, document, { returnUpdatedDocs : true });
   }
-
-  return await documents.insert(document);
 }
 
 export async function getAll(){

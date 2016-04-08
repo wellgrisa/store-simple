@@ -8,7 +8,8 @@ const DB_PATH = config.development.db;
 export default function Store(name) {
   let store = new Datastore({
     filename: path.join(DB_PATH, `${name}.json`),
-    autoload: true
+    autoload: true,
+    timestampData : true
   });
 
   return store;

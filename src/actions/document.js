@@ -1,10 +1,10 @@
-
 import * as documentApi from '../api/document'
 
 export const ADD = 'ADD';
 export const EDIT = 'EDIT';
 export const GET = 'GET';
 export const ALL = 'ALL';
+export const SAVE = 'SAVE';
 export const FETCH_REQUEST = 'FETCH_REQUEST';
 export const FETCH_SUCCESS = 'FETCH_SUCCESS';
 export const FETCH_FAIL = 'FETCH_FAIL';
@@ -33,6 +33,12 @@ export function toggleShowDialog() {
 export function add(document) {
   return async (dispatch) => {
     dispatch({ type: ADD, document : await documentApi.save(document) });
+  }
+}
+
+export function save(document) {
+  return async (dispatch) => {
+    dispatch({ type: SAVE, result : await documentApi.save(document) });
   }
 }
 

@@ -1,18 +1,19 @@
 import React, { Component, PropTypes } from 'react';
-import TextField from 'material-ui/lib/text-field';
-import FlatButton from 'material-ui/lib/flat-button';
-import List from 'material-ui/lib/lists/list';
-import ListItem from 'material-ui/lib/lists/list-item';
-import Divider from 'material-ui/lib/divider';
-import Colors from 'material-ui/lib/styles/colors';
-import Avatar from 'material-ui/lib/avatar';
-import CircularProgress from 'material-ui/lib/circular-progress';
-import Checkbox from 'material-ui/lib/checkbox';
-import FontIcon from 'material-ui/lib/font-icon';
 import { add, getAll, remove, edit } from '../../actions/document';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { Form, Modal } from '../../components/document';
+import Colors from 'material-ui/lib/styles/colors';
+import {
+  TextField,
+  FlatButton,
+  RaisedButton,
+  Checkbox,
+  CircularProgress,
+  List,
+  ListItem,
+  FontIcon
+} from 'material-ui';
 
 class Home extends Component {
   componentWillMount (){
@@ -59,8 +60,24 @@ class Home extends Component {
     return (
       <div className='container'>
         {this.renderProgress()}
-        <FlatButton label="Remove" onClick={::this.onRemove} />
-        <FlatButton label="Edit" onClick={::this.onEdit} />
+        <FlatButton
+          secondary={true}
+          label="Adicionar"
+          onClick={::this.onEdit}
+          icon={<FontIcon className="material-icons">add</FontIcon>}
+        />
+        <FlatButton
+          secondary={true}
+          label="Editar"
+          onClick={::this.onEdit}
+          icon={<FontIcon className="material-icons">create</FontIcon>}
+        />
+        <FlatButton
+          secondary={true}
+          label="Remover"
+          onClick={::this.onRemove}
+          icon={<FontIcon className="material-icons">delete</FontIcon>}
+        />
         <Modal
           open={this.props.document.showDialog}
         />

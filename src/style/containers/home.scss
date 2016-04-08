@@ -1,58 +1,62 @@
 body{
 	background-color: rgb(48, 48, 48);
 	overflow-x: hidden;
-  .bravi-logo{
-  	margin: 0 auto;
-  	height: 50px;
-  }
-	.brand-logo{
-		margin-left: 10px;
-	}
+}
 
-	h1 { color: #ffffff; font-family: 'Lato', sans-serif; font-size: 54px; font-weight: 300; line-height: 58px; margin: 0 0 58px; }
+[class^="muidocs-icon-"], [class*=" muidocs-icon-"] {
+	font-family: 'material-ui-icons';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
 
-	p.quote-paragraph{
-			color: #fff;
-	    font-family: "Adobe Caslon Pro","Hoefler Text",Georgia,Garamond,Times,serif;
-	    letter-spacing: 0.1em;
-	    width: 300px;
-	    text-align: center;
-	    margin: 40px auto;
-	    text-transform: lowercase;
-	    line-height: 145%;
-	    font-size: 14pt;
-	    font-variant: small-caps;
-	}
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
 
-	label.quote-who{
-		font-style: normal;
-    font-variant: small-caps;
-    text-decoration: none;
-    font-family: "Adobe Caslon Pro","Hoefler Text",Georgia,Garamond,Times,serif;
-    color: #afafaf;
-    font-size: 14px;
-	}
+.muidocs-icon-communication-phone:before {
+	content: "\e601";
+}
 
-	.quote-box{
-		text-align: center;
-		span{
-			color: #fff;
-		}
+.muidocs-icon-communication-voicemail:before {
+	content: "\e602";
+}
 
-		.glyphicon-refresh{
-			float: left;
-		}
+.muidocs-icon-navigation-expand-more:before {
+	content: "\e603";
+}
 
-		.glyphicon-plus{
-			float: right;
-		}
-	}
+.muidocs-icon-action-grade:before {
+	content: "\e604";
+}
 
-	.visible {
-		display: block;
-	}
+.muidocs-icon-action-home:before {
+	content: "\e605";
+}
 
-	.invisible {
-		display: none;
-	}
+.muidocs-icon-action-stars:before {
+	content: "\e606";
+}
+
+.muidocs-icon-action-thumb-up:before {
+	content: "\e607";
+}
+
+.muidocs-icon-custom-sort:before {
+	content: "\e600";
+}
+
+.muidocs-icon-custom-github:before {
+	content: "\e625";
+}
+
+.muidocs-icon-custom-arrow-drop-right:before {
+	content: "\e60b";
+}
+
+.muidocs-icon-custom-pie:before {
+	content: "\e610";
 }
