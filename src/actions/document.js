@@ -5,6 +5,7 @@ export const EDIT = 'EDIT';
 export const GET = 'GET';
 export const ALL = 'ALL';
 export const SAVE = 'SAVE';
+export const SELECT = 'SELECT';
 export const FETCH_REQUEST = 'FETCH_REQUEST';
 export const FETCH_SUCCESS = 'FETCH_SUCCESS';
 export const FETCH_FAIL = 'FETCH_FAIL';
@@ -26,14 +27,16 @@ export function edit(document) {
   return { type: EDIT, document : document };
 }
 
+export function select(document) {
+  return { type: SELECT, document : document };
+}
+
 export function toggleShowDialog() {
   return { type: TOGGLE_SHOW_DIALOG };
 }
 
 export function add(document) {
-  return async (dispatch) => {
-    dispatch({ type: ADD, document : await documentApi.save(document) });
-  }
+  return { type: ADD };
 }
 
 export function save(document) {

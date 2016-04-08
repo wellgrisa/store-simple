@@ -5,7 +5,8 @@ import {
   TOGGLE_SHOW_DIALOG,
   ALL,
   EDIT,
-  SAVE
+  SAVE,
+  SELECT
 } from '../actions/document';
 
 import update from 'react-addons-update';
@@ -17,7 +18,8 @@ const INITIAL_STATE = {
   items : [],
   isLoading : false,
   showDialog : false,
-  selectedItem : {}
+  selectedItem : {},
+  selectedLength : 0
 };
 
 export default function reducer(state = INITIAL_STATE, action) {
@@ -25,7 +27,8 @@ export default function reducer(state = INITIAL_STATE, action) {
     case ADD:
       return {
         ...state,
-        items : [action.document, ...state.items]
+        selectedItem : {},
+        showDialog : true
       };
     case SAVE:
       let existentItemIndex = action.result[1]
@@ -64,6 +67,25 @@ export default function reducer(state = INITIAL_STATE, action) {
         selectedItem : action.document,
         showDialog : true
       };
+    case SELECT:
+      let selectItems = updateArray(state.items, {
+        ...action.document,
+        selected : !action.document.selected
+      });
+      return {
+        ...state,
+        items : selectItems,
+        selectedLength : selectItems.filter(x => x.selected).length
+      };
   }
   return state
+}
+
+const updateArray = (array, item) => {
+  let selectedItemIndex = array.findIndex(x => x._id === item._id);
+  return [
+    ...array.slice(0, selectedItemIndex),
+    item,
+    ...array.slice(selectedItemIndex + 1)
+  ]
 }

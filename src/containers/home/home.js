@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { add, getAll, remove, edit } from '../../actions/document';
+import { add, getAll, remove, edit, select } from '../../actions/document';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { Form, Modal } from '../../components/document';
@@ -12,15 +12,15 @@ import {
   CircularProgress,
   List,
   ListItem,
-  FontIcon
+  FontIcon,
+  FloatingActionButton,
+  AppBar
 } from 'material-ui';
 
 class Home extends Component {
   componentWillMount (){
     this.props.dispatch(getAll());
   }
-
-
 
   onRemove () {
     this.props.dispatch(remove(this.props.document.items.filter(x => x.selected)));
@@ -31,7 +31,11 @@ class Home extends Component {
   }
 
   onSelect (document) {
-    document.selected = !document.selected;
+    this.props.dispatch(select(document));
+  }
+
+  onAdd () {
+    this.props.dispatch(add());
   }
 
   onEdit () {
@@ -43,7 +47,7 @@ class Home extends Component {
       return <ListItem
         key={x._id}
         primaryText={x.name}
-        leftCheckbox={<Checkbox onClick={::this.onSelect.bind(this, x)}/>} />
+        leftCheckbox={<Checkbox defaultChecked={x.selected} onClick={::this.onSelect.bind(this, x)}/>} />
     });
 
     return <List>
@@ -57,29 +61,23 @@ class Home extends Component {
   }
 
   render () {
+    const { document : { selectedLength, showDialog } } = this.props;
     return (
       <div className='container'>
         {this.renderProgress()}
-        <FlatButton
-          secondary={true}
-          label="Adicionar"
-          onClick={::this.onEdit}
-          icon={<FontIcon className="material-icons">add</FontIcon>}
-        />
-        <FlatButton
-          secondary={true}
-          label="Editar"
-          onClick={::this.onEdit}
-          icon={<FontIcon className="material-icons">create</FontIcon>}
-        />
-        <FlatButton
-          secondary={true}
-          label="Remover"
-          onClick={::this.onRemove}
-          icon={<FontIcon className="material-icons">delete</FontIcon>}
-        />
+        <div className='row text-center toolbar-actions'>
+          <FloatingActionButton className='floating-icon' onClick={::this.onAdd}>
+             <FontIcon className="material-icons">add</FontIcon>
+          </FloatingActionButton>
+          <FloatingActionButton disabled={selectedLength !== 1} className='floating-icon' onClick={::this.onEdit}>
+             <FontIcon className="material-icons">create</FontIcon>
+          </FloatingActionButton>
+          <FloatingActionButton disabled={selectedLength === 0} className='floating-icon' onClick={::this.onRemove}>
+             <FontIcon className="material-icons">delete</FontIcon>
+          </FloatingActionButton>
+        </div>
         <Modal
-          open={this.props.document.showDialog}
+          open={showDialog}
         />
         {this.renderDocuments()}
       </div>
