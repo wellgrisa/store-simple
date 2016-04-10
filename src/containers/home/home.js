@@ -14,7 +14,9 @@ import {
   ListItem,
   FontIcon,
   FloatingActionButton,
-  AppBar
+  AppBar,
+  Toolbar,
+  ToolbarGroup
 } from 'material-ui';
 
 class Home extends Component {
@@ -63,23 +65,25 @@ class Home extends Component {
   render () {
     const { document : { selectedLength, showDialog } } = this.props;
     return (
-      <div className='container'>
-        {this.renderProgress()}
-        <div className='row text-center toolbar-actions'>
-          <FloatingActionButton className='floating-icon' onClick={::this.onAdd}>
-             <FontIcon className="material-icons">add</FontIcon>
-          </FloatingActionButton>
-          <FloatingActionButton disabled={selectedLength !== 1} className='floating-icon' onClick={::this.onEdit}>
-             <FontIcon className="material-icons">create</FontIcon>
-          </FloatingActionButton>
-          <FloatingActionButton disabled={selectedLength === 0} className='floating-icon' onClick={::this.onRemove}>
-             <FontIcon className="material-icons">delete</FontIcon>
-          </FloatingActionButton>
+      <div style={{ marginTop : 20 }}>
+        <div className='container'>
+          {this.renderProgress()}
+          <div className='row text-center toolbar-actions'>
+            <FloatingActionButton className='floating-icon' onClick={::this.onAdd}>
+               <FontIcon className="material-icons">add</FontIcon>
+            </FloatingActionButton>
+            <FloatingActionButton disabled={selectedLength !== 1} className='floating-icon' onClick={::this.onEdit}>
+               <FontIcon className="material-icons">create</FontIcon>
+            </FloatingActionButton>
+            <FloatingActionButton disabled={selectedLength === 0} className='floating-icon' onClick={::this.onRemove}>
+               <FontIcon className="material-icons">delete</FontIcon>
+            </FloatingActionButton>
+          </div>
+          <Modal
+            open={showDialog}
+          />
+          {this.renderDocuments()}
         </div>
-        <Modal
-          open={showDialog}
-        />
-        {this.renderDocuments()}
       </div>
     );
   }
@@ -88,7 +92,8 @@ class Home extends Component {
 const mapStateToProps = (reducers) =>
 {
   return {
-    document : reducers.document
+    document : reducers.document,
+    app : reducers.app
   }
 };
 

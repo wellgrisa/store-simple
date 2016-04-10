@@ -6,14 +6,27 @@ import DarkRawTheme from 'material-ui/lib/styles/raw-themes/dark-raw-theme';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
+import { title } from '../../actions/app';
 
-import { AppBar, LeftNav, List, ListItem } from 'material-ui';
+import {
+  AppBar,
+  LeftNav,
+  List,
+  ListItem,
+  IconMenu,
+  MenuItem,
+  IconButton,
+  FontIcon,
+  DropDownMenu
+} from 'material-ui';
+
+import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
 
 import SelectableList from '../../components/SelectableList';
 
 const menuitems = [
-  { primaryText: 'Inicio', value: '/'},
-  { primaryText: 'Sobre', value: '/about'}
+  { primaryText: 'Inicio', path: '/'},
+  { primaryText: 'Sobre', path: '/about'}
 ];
 
 @ThemeDecorator(ThemeManager.getMuiTheme(DarkRawTheme))
@@ -22,13 +35,14 @@ class App extends Component {
       children: PropTypes.any.isRequired,
   }
 
-  handleLinkClick(path){
-    this.props.dispatch(push(path));
+  handleLinkClick(menuItem){
+    this.props.dispatch(title(menuItem.primaryText));
+    this.props.dispatch(push(menuItem.path));
   }
 
   renderMenuItems() {
     return menuitems.map((x, i) =>
-      <ListItem key={i} onTouchTap={::this.handleLinkClick.bind(this, x.value)} primaryText={x.primaryText} />
+      <MenuItem key={i} value={i} onTouchTap={::this.handleLinkClick.bind(this, x)} primaryText={x.primaryText} />
     );
   }
 
@@ -37,22 +51,30 @@ class App extends Component {
       <div>
 
         <header>
-          <AppBar title='MUI Routing' onLeftIconButtonTouchTap={this._handleClick} />
+          <AppBar
+            title={this.props.app.title}
+            onLeftIconButtonTouchTap={this._handleClick}
+            iconElementLeft={
+              <IconMenu
+                iconButtonElement={
+                  <IconButton><MoreVertIcon /></IconButton>
+                }
+                targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+              >
+                {this.renderMenuItems()}
+              </IconMenu>
+            }
+          />
         </header>
-
-        <div className='col-xs-1'>
-          <List>
-           {this.renderMenuItems()}
-         </List>
-        </div>
-        <div className='col-xs-11'>
-          <section>
-            {this.props.children}
-          </section>
-        </div>
+        <section>
+          {this.props.children}
+        </section>
       </div>
     );
   }
 }
 
-export default connect()(App);
+const mapStateToProps = (reducers) => ({ app : reducers.app })
+
+export default connect(mapStateToProps)(App);
