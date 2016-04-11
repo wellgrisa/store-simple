@@ -8,6 +8,11 @@ import { toggleShowDialog, add, save } from '../../actions/document'
 import Form from './form';
 import { getValues } from 'redux-form';
 
+const customContentStyle = {
+  width: '100%',
+  maxWidth: 'none',
+};
+
 class DocumentForm extends React.Component {
   handleClose () {
     this.props.dispatch(toggleShowDialog());
@@ -39,9 +44,10 @@ class DocumentForm extends React.Component {
           modal={false}
           actions={actions}
           open={showDialog}
+          contentStyle={customContentStyle}
           onRequestClose={::this.handleClose}
         >
-          <Form {...selectedItem} ref='form' onSubmit={::this.handleSubmit} />
+          <Form {...this.props.document} {...selectedItem} ref='form' onSubmit={::this.handleSubmit} />
         </Dialog>
       </div>
     );

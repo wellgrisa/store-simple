@@ -19,6 +19,7 @@
     "babel-loader": "^5.3.2",
     "babel-plugin-react-transform": "^1.1.1",
     "css-loader": "^0.23.1",
+    "electron-packager": "^6.0.2",
     "electron-prebuilt": "^0.37.2",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",

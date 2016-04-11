@@ -1,27 +1,31 @@
 import React, { Component } from 'react';
-import TextField from 'material-ui/lib/text-field';
+import {
+  TextField,
+  SelectField,
+  MenuItem
+} from 'material-ui';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
-import { fields, validate } from './validation';
+import Model from './model';
+import { modelFieldsKeys as fields, validate, buildFields } from './validation';
 
 @reduxForm({ form : 'document', fields, validate }, reducers => ({
   initialValues: reducers.document.selectedItem
 }))
 export default class Form extends React.Component {
+  handleChange () {
+
+  }
+  renderDocuments() {
+
+  }
   render () {
-    const { fields: { name } } = this.props;
+    const { fields: { name, job } } = this.props;
     return (
       <form>
         <div className='container'>
           <div className='row'>
-            <TextField ref={node => {
-              this.name = node;
-              }}
-              hintText="Nome"
-              {...name}
-              defaultValue={this.props.name}
-              errorText={name.error ? name.error : ''}
-            />
+            {buildFields(this, Model)}
           </div>
         </div>
       </form>
