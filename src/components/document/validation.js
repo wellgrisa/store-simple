@@ -21,8 +21,7 @@ export const validate = values => {
 
 export const buildFields = (sender, model) => {
 
-  let { props } = sender;
-  let { fields } = props;
+  let { props, props : { fields } } = sender;
 
   return model.fields.map((x, i) => {
     let field = fields[x.key];

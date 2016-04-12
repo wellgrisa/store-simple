@@ -10,7 +10,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack src/index.js --config webpack.config.js",
     "watch": "./node_modules/.bin/webpack-dev-server --hot --inline --port 8080",
-    "dev": "webpack-dev-server --progress --colors --hot --inline --port 8080"
+    "dev": "webpack-dev-server --progress --colors --hot --inline --port 8080",
+    "r" : "babel-node cross.js run"
   },
   "author": "",
   "license": "ISC",
