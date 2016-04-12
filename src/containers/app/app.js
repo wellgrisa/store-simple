@@ -22,7 +22,7 @@ import {
 
 import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
 
-import SelectableList from '../../components/SelectableList';
+import { SelectableList } from '../../components/selectable';
 
 const menuitems = [
   { primaryText: 'Inicio', path: '/'},

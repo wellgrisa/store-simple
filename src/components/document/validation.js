@@ -4,7 +4,8 @@ import {
   SelectField,
   MenuItem
 } from 'material-ui';
-import Model from './model'
+import Model from './model';
+import { SelectableField } from '../selectable/';
 
 export const modelFieldsKeys = Model.fields.map(x => x.key);
 
@@ -15,7 +16,6 @@ export const validate = values => {
   } else if (values.name.length > 15) {
     errors.name = 'O nome não pode ser maior que 15 caracteres';
   }
-
   return errors;
 };
 
@@ -36,9 +36,12 @@ export const buildFields = (sender, model) => {
           errorText={field.error ? field.error : ''}
         />;
     case 'SelectField':
-      return <SelectField value={props[x.key]} floatingLabelText={x.hintText}>
-        {renderMenuItems(props[x.source])}
-      </SelectField>
+      return <SelectableField
+          value={props[x.key]}
+          {...field}
+          floatingLabelText={x.hintText}
+          items={props[x.source]}
+        />
     default:
       return <TextField
         key={i}
@@ -49,12 +52,3 @@ export const buildFields = (sender, model) => {
       />
   }}).map(x => <div className='col-xs-6'>{x}</div>);
 }
-
-const renderMenuItems = (items) => (
-  items.map(x => (
-    <MenuItem
-      value={x._id}
-      key={x._id}
-      primaryText={x.name}/>
-  ))
-)

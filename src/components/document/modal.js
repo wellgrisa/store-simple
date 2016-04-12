@@ -18,6 +18,7 @@ class DocumentForm extends React.Component {
     this.props.dispatch(toggleShowDialog());
   }
   handleSubmit = (data) => {
+    console.log(data);
     const { selectedItem } = this.props.document;
     if(selectedItem){
       data._id = selectedItem._id;
