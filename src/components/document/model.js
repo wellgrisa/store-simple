@@ -15,6 +15,12 @@ export default {
       key : 'job',
       hintText : 'Trabalho',
       source : 'items'
+    },
+    {
+      type : 'RadioGroup',
+      key : 'genre',
+      hintText : 'Sexo',
+      source : ['Masculino', 'Feminino']
     }
   ]
 }

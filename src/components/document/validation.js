@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
+import Model from './model';
 import {
   TextField,
   SelectField,
   MenuItem
 } from 'material-ui';
-import Model from './model';
-import { SelectableField } from '../selectable/';
+import {
+  SelectableField,
+  SelectableRadioButton
+} from '../selectable/';
 
 export const modelFieldsKeys = Model.fields.map(x => x.key);
 
@@ -36,10 +39,16 @@ export const buildFields = (sender, model) => {
         />;
     case 'SelectField':
       return <SelectableField
-          value={props[x.key]}
+          value={props[x.key] || '0'}
           {...field}
           floatingLabelText={x.hintText}
           items={props[x.source]}
+        />
+    case 'RadioGroup':
+      return <SelectableRadioButton
+          value={props[x.key]}
+          {...field}
+          items={x.source}
         />
     default:
       return <TextField
