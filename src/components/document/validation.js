@@ -31,45 +31,51 @@ export const buildFields = (sender, model) => {
 
   return model.fields.map((x, i) => {
     let field = fields[x.key];
+    let builtField;
     switch (x.type) {
     case 'TextField':
-      return <TextField
-          key={i}
+      builtField = <TextField
+          fullWidth={true}
           hintText={x.hintText}
           floatingLabelText={x.hintText}
           {...field}
           defaultValue={props[x.key]}
           errorText={field.error ? field.error : ''}
         />;
+      break;
     case 'SelectField':
-      return <SelectableField
-          key={i}
+      builtField = <SelectableField
+          fullWidth={true}
           value={props[x.key]}
           {...field}
           items={props[x.source]}
           floatingLabelText={x.hintText}
-        />
+        />;
+      break;
     case 'RadioGroup':
-      return <SelectableRadioButton
-          key={i}
+      builtField = <SelectableRadioButton
           hintText={x.hintText}
           value={props[x.key]}
           {...field}
           items={x.source}
-        />
+        />;
+      break;
     case 'Toggle':
-      return <SelectableToggle
-          key={i}
+      builtField = <SelectableToggle
           {...x}
           {...field}
-        />
+        />;
+      break;
     default:
-      return <TextField
-        key={i}
+      builtField = <TextField
         hintText={x.hintText}
         {...field}
         defaultValue={props[x.key]}
         errorText={field.error ? field.error : ''}
-      />
-  }}).map((x, i) => <Cell is="6 nospace" key={i}>{x}</Cell>);
+      />;
+      break;
+    }
+
+    return <Cell key={i} is={x.is || '6'}>{builtField}</Cell>;
+  });
 }
