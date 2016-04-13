@@ -7,8 +7,11 @@ import {
 } from 'material-ui';
 import {
   SelectableField,
-  SelectableRadioButton
+  SelectableRadioButton,
+  SelectableToggle
 } from '../selectable/';
+
+import { Cell } from 'react-inline-grid';
 
 export const modelFieldsKeys = Model.fields.map(x => x.key);
 
@@ -33,22 +36,32 @@ export const buildFields = (sender, model) => {
       return <TextField
           key={i}
           hintText={x.hintText}
+          floatingLabelText={x.hintText}
           {...field}
           defaultValue={props[x.key]}
           errorText={field.error ? field.error : ''}
         />;
     case 'SelectField':
       return <SelectableField
-          value={props[x.key] || '0'}
+          key={i}
+          value={props[x.key]}
           {...field}
-          floatingLabelText={x.hintText}
           items={props[x.source]}
+          floatingLabelText={x.hintText}
         />
     case 'RadioGroup':
       return <SelectableRadioButton
+          key={i}
+          hintText={x.hintText}
           value={props[x.key]}
           {...field}
           items={x.source}
+        />
+    case 'Toggle':
+      return <SelectableToggle
+          key={i}
+          {...x}
+          {...field}
         />
     default:
       return <TextField
@@ -58,5 +71,5 @@ export const buildFields = (sender, model) => {
         defaultValue={props[x.key]}
         errorText={field.error ? field.error : ''}
       />
-  }}).map(x => <div className='col-xs-6'>{x}</div>);
+  }}).map((x, i) => <Cell is="6 nospace" key={i}>{x}</Cell>);
 }

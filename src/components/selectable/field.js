@@ -26,7 +26,10 @@ export default class SelectFieldExampleSimple extends React.Component {
   render() {
     return (
       <div>
-        <SelectField {...this.props} value={this.state.value} onChange={this.handleChange}>
+        <SelectField
+          {...this.props}
+          value={this.state.value}
+          onChange={this.handleChange}>
           {this.renderMenuItems(this.props.items)}
         </SelectField>
       </div>

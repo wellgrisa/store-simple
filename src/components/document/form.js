@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import Model from './model';
 import { modelFieldsKeys as fields, validate, buildFields } from './validation';
+import { Grid, Row } from 'react-inline-grid';
 
 @reduxForm({ form : 'document', fields, validate }, reducers => ({
   initialValues: reducers.document.selectedItem
@@ -16,11 +17,11 @@ export default class Form extends React.Component {
   render () {
     return (
       <form>
-        <div className='container'>
-          <div className='row'>
+        <Grid>
+          <Row>
             {buildFields(this, Model)}
-          </div>
-        </div>
+          </Row>
+        </Grid>
       </form>
     );
   }

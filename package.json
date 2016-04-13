@@ -4,14 +4,14 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "electron main.js",
-    "win": "set NODE_ENV=development&&npm start",
-    "lin": "NODE_ENV=development npm start",
+    "start": "babel-node cross.js run",
+    "electron": "electron main.js",
+    "win": "set NODE_ENV=development&&npm run electron",
+    "lin": "NODE_ENV=development npm run electron",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack src/index.js --config webpack.config.js",
     "watch": "./node_modules/.bin/webpack-dev-server --hot --inline --port 8080",
-    "dev": "webpack-dev-server --progress --colors --hot --inline --port 8080",
-    "r" : "babel-node cross.js run"
+    "dev": "webpack-dev-server --progress --colors --hot --inline --port 8080"
   },
   "author": "",
   "license": "ISC",
@@ -54,6 +54,7 @@
     "nedb": "^1.8.0",
     "nedb-promise": "^2.0.0",
     "react-addons-update": "^0.14.8",
+    "react-inline-grid": "^0.5.3",
     "react-materialize": "^0.14.2",
     "react-redux": "^4.0.6",
     "react-router": "^2.0.1",
