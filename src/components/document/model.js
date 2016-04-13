@@ -29,9 +29,9 @@ export default {
       is : '2'
     },
     {
-      type : 'TextField',
-      key : 'neighborhood',
-      hintText : 'Bairro',
+      type : 'Date',
+      key : 'bof',
+      hintText : 'Nascimento',
       is : '10'
     },
     {
@@ -42,7 +42,7 @@ export default {
     },
     {
       type : 'SelectField',
-      key : 'job',
+      key : 'list',
       hintText : 'Trabalho',
       source : 'items'
     }

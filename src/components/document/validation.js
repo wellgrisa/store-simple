@@ -8,7 +8,8 @@ import {
 import {
   SelectableField,
   SelectableRadioButton,
-  SelectableToggle
+  SelectableToggle,
+  SelectableDate
 } from '../selectable/';
 
 import { Cell } from 'react-inline-grid';
@@ -62,6 +63,12 @@ export const buildFields = (sender, model) => {
       break;
     case 'Toggle':
       builtField = <SelectableToggle
+          {...x}
+          {...field}
+        />;
+      break;
+    case 'Date':
+      builtField = <SelectableDate
           {...x}
           {...field}
         />;
