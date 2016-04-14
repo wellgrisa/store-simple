@@ -28,9 +28,9 @@ export default class SelectableRadioButton extends React.Component {
       <div style={{width: 'auto'}}>
         <label style={styles.label}>{this.props.hintText}</label>
         <RadioButtonGroup
-          defaultSelected={`${this.props.value}`}
+          defaultSelected={`${this.props.initialValue}`}
           {...this.props}>
-          {this.renderButtonGroups(this.props.items)}
+          {this.renderButtonGroups(this.props.source)}
         </RadioButtonGroup>
       </div>
     );

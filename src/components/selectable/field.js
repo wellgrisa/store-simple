@@ -6,15 +6,15 @@ export default class SelectFieldExampleSimple extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {value: props.value};
+    this.state = {value: props.initialValue};
   }
 
   renderMenuItems = (items) => (
-    items.map(x => (
+    items.map(item => (
       <MenuItem
-        value={x._id}
-        key={x._id}
-        primaryText={x.name}/>
+        value={item._id}
+        key={item._id}
+        primaryText={item.name}/>
     ))
   )
 
@@ -27,10 +27,12 @@ export default class SelectFieldExampleSimple extends React.Component {
     return (
       <div>
         <SelectField
+          fullWidth
+          floatingLabelText={this.props.hintText}
           {...this.props}
-          value={this.state.value}
+          {...this.state}
           onChange={this.handleChange}>
-          {this.renderMenuItems(this.props.items)}
+          {this.renderMenuItems(this.props.source)}
         </SelectField>
       </div>
     );

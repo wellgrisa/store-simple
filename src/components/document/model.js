@@ -1,38 +1,62 @@
 export default {
   fields : [
     {
-      type : 'TextField',
+      type : 'Text',
       key : 'name',
       hintText : 'Nome',
-      is : '8'
+      col : '9'
     },
     {
-      type : 'TextField',
-      key : 'surname',
-      hintText : 'Sobrenome',
-      is : '4'
-    },
-    {
-      type : 'TextField',
+      type : 'Text',
       key : 'job',
-      hintText : 'Profissão'
+      hintText : 'Profissão',
+      col : '3'
     },
     {
-      type : 'TextField',
+      type : 'Text',
       key : 'address',
-      hintText : 'Endereço'
+      hintText : 'Endereço',
+      col : '6'
     },
     {
-      type : 'TextField',
+      type : 'Text',
       key : 'number',
       hintText : 'Número',
-      is : '2'
+      col : '2',
+      mask : '1111'
+    },
+    {
+      type : 'Text',
+      key : 'neighborhood',
+      hintText : 'Bairro',
+      col : '4'
+    },
+    {
+      type : 'Text',
+      key : 'rg',
+      hintText : 'RG',
+      col : '3',
+      mask : '11111111'
+    },
+    {
+      type : 'Text',
+      key : 'cpf',
+      hintText : 'CPF',
+      col : '3',
+      mask : '111-111-111.11'
     },
     {
       type : 'Date',
-      key : 'bof',
+      key : 'date-of-birth',
       hintText : 'Nascimento',
-      is : '10'
+      col : '3'
+    },
+    {
+      type : 'Text',
+      key : 'age',
+      hintText : 'Idade',
+      col : '3',
+      mask : '11111111111'
     },
     {
       type : 'RadioGroup',
@@ -41,10 +65,10 @@ export default {
       source : ['Masculino', 'Feminino']
     },
     {
-      type : 'SelectField',
+      type : 'Select',
       key : 'list',
       hintText : 'Trabalho',
       source : 'items'
-    }
+    },
   ]
 }

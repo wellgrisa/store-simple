@@ -9,7 +9,8 @@ import {
   SelectableField,
   SelectableRadioButton,
   SelectableToggle,
-  SelectableDate
+  SelectableDate,
+  SelectableText
 } from '../selectable/';
 
 import { Cell } from 'react-inline-grid';
@@ -34,31 +35,23 @@ export const buildFields = (sender, model) => {
     let field = fields[x.key];
     let builtField;
     switch (x.type) {
-    case 'TextField':
-      builtField = <TextField
-          fullWidth={true}
-          hintText={x.hintText}
-          floatingLabelText={x.hintText}
+    case 'Text':
+        builtField = <SelectableText
           {...field}
-          defaultValue={props[x.key]}
-          errorText={field.error ? field.error : ''}
-        />;
+          {...x}
+          />
       break;
-    case 'SelectField':
+    case 'Select':
       builtField = <SelectableField
-          fullWidth={true}
-          value={props[x.key]}
+          {...x}
           {...field}
-          items={props[x.source]}
-          floatingLabelText={x.hintText}
+          source={props[x.source]}
         />;
       break;
     case 'RadioGroup':
       builtField = <SelectableRadioButton
-          hintText={x.hintText}
-          value={props[x.key]}
+          {...x}
           {...field}
-          items={x.source}
         />;
       break;
     case 'Toggle':
@@ -83,6 +76,6 @@ export const buildFields = (sender, model) => {
       break;
     }
 
-    return <Cell key={i} is={x.is || '6'}>{builtField}</Cell>;
+    return <Cell key={i} is={x.col || '6'}>{builtField}</Cell>;
   });
 }
