@@ -69,12 +69,12 @@ export const model = {
     //   col : '3',
     //   mask : '111-111-111.11'
     // },
-    // {
-    //   type : 'Date',
-    //   key : 'date-of-birth',
-    //   hintText : 'Nascimento',
-    //   col : '3'
-    // },
+    {
+      type : 'Date',
+      key : 'date-of-birth',
+      hintText : 'Nascimento',
+      col : '3'
+    },
     // {
     //   type : 'Text',
     //   key : 'age',
@@ -97,7 +97,7 @@ export const model = {
     {
       type : 'Complex',
       model : dependent,
-      key : 'dependents[]',
+      key : 'dependents',
       fields : ['name'],
       hintText : 'Dependentes'
     },
@@ -106,7 +106,7 @@ export const model = {
 
 export const fields = model.fields.reduce((keys, item) => {
   if(item.type === 'Complex'){
-    item.model.fields.forEach(field => keys.push(`${item.key}.${field.key}`));
+    item.model.fields.forEach(field => keys.push(`${item.key}[].${field.key}`));
   }else{
     keys.push(item.key);
   }

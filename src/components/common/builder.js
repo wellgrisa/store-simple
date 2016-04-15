@@ -15,10 +15,10 @@ import {
 
 import { Grid, Row, Cell } from 'react-inline-grid';
 
-export const builder = (formFields, model) => {
+export const builder = (formFields, model, props) => {
 
   let builtElements = model.fields.map((x, i) => {
-    let field = formFields[x.key] || fields[x.key.replace(/\[\]/ig, '')];
+    let field = formFields[x.key] || formFields[x.key.replace(/\[\]/ig, '')];
     let builtField;
     switch (x.type) {
     case 'Text':
@@ -53,7 +53,7 @@ export const builder = (formFields, model) => {
         />;
       break;
     case 'Complex':
-      builtField = buildList(field);
+      builtField = buildList(field, x, props);
       break;
     default:
       builtField = <TextField
@@ -74,3 +74,15 @@ export const builder = (formFields, model) => {
     </Row>
   </Grid>;
 }
+
+const buildList = (dependents, x, props) => (
+  <div>
+    <FlatButton label='Adicionar' onClick={() => dependents.addField()} />
+    {!dependents.length && <span style={{ color : '#fff'}}>Sem Dependentes Cadastrados</span>}
+    {
+      dependents.map(dependentFields => (
+        builder(dependentFields, x.model)
+      ))
+    }
+  </div>
+)

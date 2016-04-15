@@ -9,6 +9,7 @@ import { reduxForm, addArrayValue  } from 'redux-form';
 import { fields, model } from './model';
 import { validate, buildFields } from './validation';
 import { Grid, Row } from 'react-inline-grid';
+import { builder } from '../common/builder';
 
 @reduxForm({ form : 'document', fields, validate }, reducers => ({
   initialValues: reducers.document.selectedItem
@@ -22,7 +23,7 @@ export default class Form extends React.Component {
       <form>
         <Grid>
           <Row>
-            {buildFields(this, model)}
+            {builder(this.props.fields, model, this.props)}
           </Row>
         </Grid>
       </form>

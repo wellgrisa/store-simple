@@ -9,7 +9,7 @@ if (areIntlLocalesSupported('pt-Br')) {
   DateTimeFormat = global.Intl.DateTimeFormat;
 } else {
   const IntlPolyfill = require('intl');
-  require('intl/locale-data/jsonp/pt-Br');
+  require('intl/locale-data/jsonp/pt-BR');
   DateTimeFormat = IntlPolyfill.DateTimeFormat;
 }
 
