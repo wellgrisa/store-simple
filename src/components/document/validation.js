@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import Model from './model';
+import { model, fields as modelFieldsKeys } from './model';
 import {
   TextField,
   SelectField,
-  MenuItem
+  MenuItem,
+  FlatButton
 } from 'material-ui';
 import {
   SelectableField,
@@ -15,24 +16,39 @@ import {
 
 import { Cell } from 'react-inline-grid';
 
-export const modelFieldsKeys = Model.fields.map(x => x.key);
+const requireFields = (...names) => data =>
+  names.reduce((errors, name) => {
+    if (!data[name]) {
+      errors[name] = 'Required'
+    }
+    return errors
+  }, {});
+
+const validateChild = requireFields('name');
 
 export const validate = values => {
+
   const errors = {};
   if (!values.name) {
     errors.name = 'Esse campo é obrigatório';
   } else if (values.name.length > 15) {
     errors.name = 'O nome não pode ser maior que 15 caracteres';
   }
+
+  errors.dependents = values.dependents.map(validateChild);
+
   return errors;
 };
+
+
+
 
 export const buildFields = (sender, model) => {
 
   let { props, props : { fields } } = sender;
 
   return model.fields.map((x, i) => {
-    let field = fields[x.key];
+    let field = fields[x.key] || fields[x.key.replace(/\[\]/ig, '')];
     let builtField;
     switch (x.type) {
     case 'Text':
@@ -66,6 +82,9 @@ export const buildFields = (sender, model) => {
           {...field}
         />;
       break;
+    case 'Complex':
+      builtField = buildList(field, x.source);
+      break;
     default:
       builtField = <TextField
         hintText={x.hintText}
@@ -78,4 +97,21 @@ export const buildFields = (sender, model) => {
 
     return <Cell key={i} is={x.col || '6'}>{builtField}</Cell>;
   });
+}
+
+const buildList = (dependents, source) => {
+
+  return <div>
+    <FlatButton label='Adicionar' onClick={() => dependents.addField()} />
+    {!dependents.length && <span style={{ color : '#fff'}}>Sem Dependentes Cadastrados</span>}
+    {dependents.map((field, i) => {
+      return <div key={i}>
+        <TextField
+            fullWidth
+            {...field.name}
+            hintText='Nome'
+            errorText={field.name.error ? field.name.error : ''} />
+      </div>
+    })}
+  </div>;
 }
