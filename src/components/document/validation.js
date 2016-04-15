@@ -14,6 +14,8 @@ import {
   SelectableText
 } from '../selectable/';
 
+import { builder } from '../common/builder';
+
 import { Cell } from 'react-inline-grid';
 
 const requireFields = (...names) => data =>
@@ -83,7 +85,7 @@ export const buildFields = (sender, model) => {
         />;
       break;
     case 'Complex':
-      builtField = buildList(field, x.source);
+      builtField = buildList(field, x, props);
       break;
     default:
       builtField = <TextField
@@ -99,19 +101,20 @@ export const buildFields = (sender, model) => {
   });
 }
 
-const buildList = (dependents, source) => {
+const buildList = (dependents, x, props) => {
 
   return <div>
     <FlatButton label='Adicionar' onClick={() => dependents.addField()} />
     {!dependents.length && <span style={{ color : '#fff'}}>Sem Dependentes Cadastrados</span>}
-    {dependents.map((field, i) => {
-      return <div key={i}>
-        <TextField
-            fullWidth
-            {...field.name}
-            hintText='Nome'
-            errorText={field.name.error ? field.name.error : ''} />
-      </div>
+    {dependents.map((dependentFields, i) => {
+      return builder(dependentFields, x.model);
+      // return <div key={i}>
+      //   <TextField
+      //       fullWidth
+      //       {...field.name}
+      //       hintText='Nome'
+      //       errorText={field.name.error ? field.name.error : ''} />
+      // </div>
     })}
   </div>;
 }

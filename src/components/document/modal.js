@@ -42,7 +42,6 @@ class DocumentForm extends React.Component {
       <div>
         <Dialog
           title="Documento"
-          modal
           autoScrollBodyContent
           actions={actions}
           open={showDialog}

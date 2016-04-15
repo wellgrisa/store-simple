@@ -21,8 +21,7 @@ app.on('window-all-closed', function() {
 // initialization and is ready to create browser windows.
 app.on('ready', function() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({
-    autoHideMenuBar: true,
+  mainWindow = new BrowserWindow({    
     darkTheme: true
   });
 

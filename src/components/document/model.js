@@ -4,8 +4,21 @@ export const dependent = {
       type : 'Text',
       key : 'name',
       hintText : 'Nome',
-      col : '12'
-    }
+      col : '4'
+    },
+    {
+      type : 'Text',
+      key : 'surname',
+      hintText : 'Sobrenome',
+      col : '4'
+    },
+    {
+      type : 'Text',
+      key : 'rg',
+      hintText : 'RG',
+      col : '3',
+      mask : '11111111'
+    },
   ]
 }
 
@@ -86,22 +99,14 @@ export const model = {
       model : dependent,
       key : 'dependents[]',
       fields : ['name'],
-      hintText : 'Dependentes',
-      source : [
-        {
-          name : 'um'
-        },
-        {
-          name : 'dois',
-        }
-      ]
+      hintText : 'Dependentes'
     },
   ]
 }
 
 export const fields = model.fields.reduce((keys, item) => {
   if(item.type === 'Complex'){
-    item.fields.forEach(field => keys.push(`${item.key}.${field}`));
+    item.model.fields.forEach(field => keys.push(`${item.key}.${field.key}`));
   }else{
     keys.push(item.key);
   }

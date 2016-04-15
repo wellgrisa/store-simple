@@ -14,6 +14,9 @@ import { Grid, Row } from 'react-inline-grid';
   initialValues: reducers.document.selectedItem
 }), { addValue : addArrayValue } )
 export default class Form extends React.Component {
+  componentDidUpdate(){
+    window.dispatchEvent(new Event('resize'));
+  }
   render () {
     return (
       <form>
