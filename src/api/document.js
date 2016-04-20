@@ -1,4 +1,4 @@
-import { documents } from '../data';
+import { documents, getStoreInstance } from '../data';
 
 export async function save(document){
   if(!document._id){

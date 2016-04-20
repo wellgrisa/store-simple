@@ -46,6 +46,7 @@ export default function reducer(state = INITIAL_STATE, action) {
         items
       };
     case ALL:
+      console.log('ALL', 'document');
       return {
         ...state,
         items : action.items,

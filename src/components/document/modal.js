@@ -4,9 +4,13 @@ import FlatButton from 'material-ui/lib/flat-button';
 import RaisedButton from 'material-ui/lib/raised-button';
 import DatePicker from 'material-ui/lib/date-picker/date-picker';
 import { connect } from 'react-redux';
-import { toggleShowDialog, add, save } from '../../actions/document'
+import { toggleShowDialog, add } from '../../actions/document'
+import { save } from '../../actions/app'
 import Form from './form';
 import { getValues } from 'redux-form';
+import { builder } from '../common/builder';
+
+import { fields } from '../common/model';
 
 const customContentStyle = {
   width: '100%',
@@ -18,12 +22,11 @@ class DocumentForm extends React.Component {
     this.props.dispatch(toggleShowDialog());
   }
   handleSubmit = (data) => {
-    console.log(data);
     const { selectedItem } = this.props.document;
     if(selectedItem){
       data._id = selectedItem._id;
     }
-    this.props.dispatch(save(data));
+    this.props.dispatch(save(data, this.props.app.selectedForm.instance));
     this.props.dispatch(toggleShowDialog());
   }
   handleSave () {
@@ -31,6 +34,7 @@ class DocumentForm extends React.Component {
   }
   render() {
     const { selectedItem, showDialog } = this.props.document;
+    const { selectedForm } = this.props.app;
     const actions = [
             <FlatButton
                label="Salvar"
@@ -48,7 +52,14 @@ class DocumentForm extends React.Component {
           contentStyle={customContentStyle}
           onRequestClose={::this.handleClose}
         >
-          <Form {...this.props.document} {...selectedItem} ref='form' onSubmit={::this.handleSubmit} />
+          <Form
+            ref='form'
+            model={selectedForm.model}
+            fields={fields(selectedForm.model)}
+            selectedItem={selectedItem}
+            onSubmit={::this.handleSubmit}
+          >
+          </Form>
         </Dialog>
       </div>
     );
@@ -58,7 +69,8 @@ class DocumentForm extends React.Component {
 const mapStateToProps = (reducers) =>
 {
   return {
-    document : reducers.document
+    document : reducers.document,
+    app : reducers.app
   }
 };
 

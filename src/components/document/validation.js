@@ -37,7 +37,7 @@ export const validate = values => {
     errors.name = 'O nome não pode ser maior que 15 caracteres';
   }
 
-  errors.dependents = values.dependents.map(validateChild);
+  //errors.dependents = values.dependents.map(validateChild);
 
   return errors;
 };
@@ -102,7 +102,7 @@ export const buildFields = (sender, model) => {
 }
 
 const buildList = (dependents, x, props) => {
-
+debugger;
   return <div>
     <FlatButton label='Adicionar' onClick={() => dependents.addField()} />
     {!dependents.length && <span style={{ color : '#fff'}}>Sem Dependentes Cadastrados</span>}

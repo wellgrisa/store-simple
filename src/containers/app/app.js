@@ -6,7 +6,7 @@ import DarkRawTheme from 'material-ui/lib/styles/raw-themes/dark-raw-theme';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { title } from '../../actions/app';
+import { title, getAll } from '../../actions/app';
 
 import {
   AppBar,
@@ -22,26 +22,23 @@ import {
 
 import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
 
-import { SelectableList } from '../../components/selectable';
-
-const menuitems = [
-  { primaryText: 'Inicio', path: '/'},
-  { primaryText: 'Sobre', path: '/about'}
-];
-
 @ThemeDecorator(ThemeManager.getMuiTheme(DarkRawTheme))
 class App extends Component {
   static propTypes = {
       children: PropTypes.any.isRequired,
   }
 
+  componentWillMount (){
+    this.props.dispatch(getAll());
+  }
+
   handleLinkClick(menuItem){
-    this.props.dispatch(title(menuItem.primaryText));
+    this.props.dispatch(title(menuItem));
     this.props.dispatch(push(menuItem.path));
   }
 
-  renderMenuItems() {
-    return menuitems.map((x, i) =>
+  renderMenuItems(items) {
+    return items.map((x, i) =>
       <MenuItem key={i} value={i} onTouchTap={::this.handleLinkClick.bind(this, x)} primaryText={x.primaryText} />
     );
   }
@@ -62,7 +59,7 @@ class App extends Component {
                 targetOrigin={{horizontal: 'right', vertical: 'top'}}
                 anchorOrigin={{horizontal: 'right', vertical: 'top'}}
               >
-                {this.renderMenuItems()}
+                {this.renderMenuItems(this.props.app.forms)}
               </IconMenu>
             }
           />
@@ -75,6 +72,4 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (reducers) => ({ app : reducers.app })
-
-export default connect(mapStateToProps)(App);
+export default connect(reducers => ({ app : reducers.app }))(App);

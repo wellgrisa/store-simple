@@ -6,12 +6,13 @@ import {
 } from 'material-ui';
 import { connect } from 'react-redux';
 import { reduxForm, addArrayValue  } from 'redux-form';
-import { fields, model } from './model';
+import { model } from './model';
 import { validate, buildFields } from './validation';
 import { Grid, Row } from 'react-inline-grid';
 import { builder } from '../common/builder';
+import { fields } from '../common/builder';
 
-@reduxForm({ form : 'document', fields, validate }, reducers => ({
+@reduxForm({ form : 'document', validate }, reducers => ({
   initialValues: reducers.document.selectedItem
 }), { addValue : addArrayValue } )
 export default class Form extends React.Component {
@@ -23,7 +24,7 @@ export default class Form extends React.Component {
       <form>
         <Grid>
           <Row>
-            {builder(this.props.fields, model, this.props)}
+            {builder(this.props)}
           </Row>
         </Grid>
       </form>
