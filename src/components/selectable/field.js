@@ -10,12 +10,16 @@ export default class SelectFieldExampleSimple extends React.Component {
   }
 
   renderMenuItems = (items) => (
-    items.map(item => (
-      <MenuItem
-        value={item._id}
-        key={item._id}
-        primaryText={item.name}/>
-    ))
+    items.map((item, index) => {
+      let menuItem = item._id
+        ? { key : item._id, text : item.name }
+        : { key : index, text : item };
+
+      return <MenuItem
+        value={menuItem.key}
+        key={menuItem.key}
+        primaryText={menuItem.text}/>
+    })
   )
 
   handleChange = (event, index, value) => {

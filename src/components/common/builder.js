@@ -3,7 +3,10 @@ import {
   TextField,
   SelectField,
   MenuItem,
-  FlatButton
+  RaisedButton,
+  FontIcon,
+  Paper,
+  Divider
 } from 'material-ui';
 import {
   SelectableField,
@@ -31,7 +34,7 @@ export const builder = (formFields, model, props) => {
       builtField = <SelectableField
           {...x}
           {...field}
-          source={props[x.source]}
+          source={Array.isArray(x.source) ? x.source : props[x.source]}
         />;
       break;
     case 'RadioGroup':
@@ -55,6 +58,9 @@ export const builder = (formFields, model, props) => {
     case 'Complex':
       builtField = buildList(field, x, props);
       break;
+    case 'Icon':
+      builtField = <FontIcon onClick={x.onClick} className="material-icons">{x.icon}</FontIcon>;
+      break;
     default:
       builtField = <TextField
         hintText={x.hintText}
@@ -65,24 +71,26 @@ export const builder = (formFields, model, props) => {
       break;
     }
 
-    return <Cell key={i} is={x.col || '6'}>{builtField}</Cell>;
+    return <Cell key={i} is={x.col || '12'}>{builtField}</Cell>;
   });
 
   return <Grid>
-    <Row>
-      {builtElements}
-    </Row>
-  </Grid>;
+      <Row is='start nospace'>
+        {builtElements}
+      </Row>
+    </Grid>;
 }
 
 const buildList = (dependents, x, props) => (
   <div>
-    <FlatButton label='Adicionar' onClick={() => dependents.addField()} />
-    {!dependents.length && <span style={{ color : '#fff'}}>Sem Dependentes Cadastrados</span>}
+    <RaisedButton secondary label='Adicionar' onClick={() => dependents.addField()} />
+    {!dependents.length && <span style={{ color : '#fff', marginLeft : 10 }}>Sem Dependentes Cadastrados</span>}
     {
-      dependents.map(dependentFields => (
-        builder(dependentFields, x.model)
-      ))
+      dependents.map((dependentFields, i) => {
+        x.model.fields[x.model.fields.findIndex(x => x.type === 'Icon')].onClick = () => dependents.removeField(i);
+        return builder(dependentFields, x.model)
+        }
+      )
     }
   </div>
 )

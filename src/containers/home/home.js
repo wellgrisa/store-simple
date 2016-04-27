@@ -18,6 +18,7 @@ import {
   Toolbar,
   ToolbarGroup
 } from 'material-ui';
+import ipc from 'ipc';
 
 class Home extends Component {
   componentWillMount (){
@@ -42,6 +43,10 @@ class Home extends Component {
 
   onEdit () {
     this.props.dispatch(edit(this.props.document.items.find(x => x.selected)));
+  }
+
+  onPrint () {
+    ipc.send('toggle-insert-view');
   }
 
   renderDocuments() {
@@ -77,6 +82,9 @@ class Home extends Component {
             </FloatingActionButton>
             <FloatingActionButton disabled={selectedLength === 0} className='floating-icon' onClick={::this.onRemove}>
                <FontIcon className="material-icons">delete</FontIcon>
+            </FloatingActionButton>
+            <FloatingActionButton className='floating-icon' onClick={::this.onPrint}>
+               <FontIcon className="material-icons">print</FontIcon>
             </FloatingActionButton>
           </div>
           <Modal
