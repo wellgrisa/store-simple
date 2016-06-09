@@ -15,9 +15,12 @@ import {
   ListItem,
   IconMenu,
   MenuItem,
-  IconButton,
+  RaisedButton, IconButton,
   FontIcon,
-  DropDownMenu
+  FloatingActionButton,
+  DropDownMenu,
+  TextField,
+  Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle
 } from 'material-ui';
 
 import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
@@ -26,6 +29,7 @@ import { SelectableList } from '../../components/selectable';
 
 const menuitems = [
   { primaryText: 'Inicio', path: '/'},
+  { primaryText: 'Pessoas', path: '/people'},
   { primaryText: 'Sobre', path: '/about'}
 ];
 
@@ -40,6 +44,20 @@ class App extends Component {
     this.props.dispatch(push(menuItem.path));
   }
 
+  renderToolbarButtons(buttons) {
+    return buttons.map((x, i) =>
+      <FontIcon className="material-icons" key={i} onClick={x.action} disabled={x.disabled}>
+        {x.label}
+      </FontIcon>
+    );
+  }
+
+  renderCustomGroups() {
+    if(this.props.app.customGroups.length){
+      return this.props.app.customGroups;
+    }
+  }
+
   renderMenuItems() {
     return menuitems.map((x, i) =>
       <MenuItem key={i} value={i} onTouchTap={::this.handleLinkClick.bind(this, x)} primaryText={x.primaryText} />
@@ -49,23 +67,27 @@ class App extends Component {
   render () {
     return (
       <div>
-
         <header>
-          <AppBar
-            title={this.props.app.title}
-            onLeftIconButtonTouchTap={this._handleClick}
-            iconElementLeft={
-              <IconMenu
-                iconButtonElement={
-                  <IconButton><MoreVertIcon /></IconButton>
-                }
-                targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-              >
-                {this.renderMenuItems()}
-              </IconMenu>
-            }
-          />
+        <Toolbar style={{backgroundColor: 'rgb(0, 188, 212)'}}>
+          <ToolbarGroup firstChild>
+            <ToolbarTitle style={{ float : 'right' }} text={this.props.app.title} />
+            <IconMenu
+              iconButtonElement={
+                <IconButton touch={true} style={{ marginTop : 5 }}>
+                <FontIcon className="material-icons">
+                  menu
+                </FontIcon>
+                </IconButton>
+              }
+            >
+              {this.renderMenuItems()}
+            </IconMenu>
+          </ToolbarGroup>
+          {this.renderCustomGroups()}
+          <ToolbarGroup float={'right'}>
+            {this.renderToolbarButtons(this.props.app.buttons)}
+          </ToolbarGroup>
+        </Toolbar>
         </header>
         <section>
           {this.props.children}

@@ -6,7 +6,8 @@ import {
   ALL,
   EDIT,
   SAVE,
-  SELECT
+  SELECT,
+  FETCH_ITEM
 } from '../actions/document';
 
 import update from 'react-addons-update';
@@ -23,6 +24,7 @@ const INITIAL_STATE = {
 };
 
 export default function reducer(state = INITIAL_STATE, action) {
+
   switch (action.type) {
     case ADD:
       return {
@@ -48,7 +50,7 @@ export default function reducer(state = INITIAL_STATE, action) {
     case ALL:
       return {
         ...state,
-        items : action.items,
+        items : action.searchTerm ? action.items.filter(action.searchTerm) : action.items,
         isLoading : false,
       };
     case TOGGLE_SHOW_DIALOG:
@@ -67,6 +69,12 @@ export default function reducer(state = INITIAL_STATE, action) {
         selectedItem : action.document,
         showDialog : true
       };
+    case FETCH_ITEM:
+      return {
+        ...state,
+        selectedItem : { ...state.items.find(x => x._id === action.id) },
+        showDialog : true
+      };
     case SELECT:
       let selectItems = updateArray(state.items, {
         ...action.document,
@@ -75,7 +83,8 @@ export default function reducer(state = INITIAL_STATE, action) {
       return {
         ...state,
         items : selectItems,
-        selectedLength : selectItems.filter(x => x.selected).length
+        selectedLength : selectItems.filter(x => x.selected).length,
+        selectedItem : action.document
       };
   }
   return state

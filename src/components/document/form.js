@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
-import {
-  TextField,
-  SelectField,
-  MenuItem
-} from 'material-ui';
-import { connect } from 'react-redux';
 import { reduxForm, addArrayValue  } from 'redux-form';
 import { fields, model } from './model';
-import { validate, buildFields } from './validation';
+import { validate } from './validation';
 import { Grid, Row } from 'react-inline-grid';
 import { builder } from '../common/builder';
 

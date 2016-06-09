@@ -6,6 +6,7 @@ export const GET = 'GET';
 export const ALL = 'ALL';
 export const SAVE = 'SAVE';
 export const SELECT = 'SELECT';
+export const FETCH_ITEM = 'FETCH_ITEM';
 export const FETCH_REQUEST = 'FETCH_REQUEST';
 export const FETCH_SUCCESS = 'FETCH_SUCCESS';
 export const FETCH_FAIL = 'FETCH_FAIL';
@@ -31,6 +32,10 @@ export function select(document) {
   return { type: SELECT, document : document };
 }
 
+export function fetch(id) {
+  return { type: FETCH_ITEM, id };
+}
+
 export function toggleShowDialog() {
   return { type: TOGGLE_SHOW_DIALOG };
 }
@@ -52,12 +57,11 @@ export function remove(items) {
   }
 }
 
-export function getAll(){
+export function getAll(searchTerm){
   return async (dispatch) => {
     dispatch({ type: FETCH_REQUEST });
-
     try {
-      dispatch({ type: ALL, items: await documentApi.getAll() });
+      dispatch({ type: ALL, items: await documentApi.getAll(), searchTerm });
     } catch (error) {
       dispatch({ type: FETCH_FAIL, error });
     }
