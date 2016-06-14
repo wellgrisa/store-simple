@@ -9,7 +9,7 @@ import {
   FlatButton,
   RaisedButton,
   Checkbox,
-  CircularProgress,
+  LinearProgress,
   List,
   FontIcon,
   ListItem,
@@ -96,17 +96,12 @@ class People extends Component {
       {listItems}
     </List>;
   }
-  renderProgress(){
-    if(this.props.document.isLoading){
-      return <CircularProgress />;
-    }
-  }
+
 
   render () {
     return (
       <div style={{ marginTop : 20 }}>
         <div className='container'>
-          {this.renderProgress()}
           {this.renderDocuments()}
         </div>
       </div>

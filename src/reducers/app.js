@@ -1,4 +1,6 @@
 import {
+  FETCH_REQUEST,
+  FETCH_SUCCESS,
   CHANGE_TITLE,
   SET_TOOLBAR_BUTTONS,
   SET_TOOLBAR_CUSTOM_GROUP
@@ -7,7 +9,8 @@ import {
 const INITIAL_STATE = {
   title : 'Início',
   buttons : [],
-  customGroups : []
+  customGroups : [],
+  isLoading : false
 };
 
 export default function reducer(state = INITIAL_STATE, action) {
@@ -26,6 +29,16 @@ export default function reducer(state = INITIAL_STATE, action) {
       return {
         ...state,
         customGroups : action.customGroups
+      };
+    case FETCH_REQUEST:
+      return {
+        ...state,
+        isLoading : true,
+      };
+    case FETCH_SUCCESS:
+      return {
+        ...state,
+        isLoading : false,
       };
   }
   return state

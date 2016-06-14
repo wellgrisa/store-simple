@@ -30,6 +30,18 @@ export const builder = (formFields, model, props) => {
           {...x}
           />
       break;
+    case 'TextIcon':
+      builtField = <div>
+          <div style={{ marginTop : 40, float: 'left' }}>
+            <FontIcon className="material-icons">{x.icon}</FontIcon>
+          </div>
+          <SelectableText
+            {...field}
+            {...x}
+            style={{ width : '75%'}}
+            />
+        </div>
+      break;
     case 'Select':
       builtField = <SelectableField
           {...x}
@@ -83,8 +95,16 @@ export const builder = (formFields, model, props) => {
 
 const buildList = (dependents, x, props) => (
   <div>
-    <RaisedButton secondary label='Adicionar' onClick={() => dependents.addField()} />
-    {!dependents.length && <span style={{ color : '#fff', marginLeft : 10 }}>Sem Dependentes Cadastrados</span>}
+    <div style={{textAlign : 'right'}}>
+      <RaisedButton secondary label='Adicionar' onClick={() => dependents.addField()} />
+    </div>
+    {
+      !dependents.length &&
+      <div style={{textAlign : 'center'}}>
+        <span style={{ color : '#fff' }}>Sem Dependentes Cadastrados</span>
+      </div>
+    }
+    dependents.length && <div className='form-dynamic-children'> <Divider style={{ backgroundColor : '#0097a7' }} />
     {
       dependents.map((dependentFields, i) => {
         x.model.fields[x.model.fields.findIndex(x => x.type === 'Icon')].onClick = () => dependents.removeField(i);
@@ -92,5 +112,6 @@ const buildList = (dependents, x, props) => (
         }
       )
     }
+    </div>
   </div>
 )

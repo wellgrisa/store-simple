@@ -20,6 +20,7 @@ import {
   FloatingActionButton,
   DropDownMenu,
   TextField,
+  LinearProgress,
   Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle
 } from 'material-ui';
 
@@ -64,6 +65,12 @@ class App extends Component {
     );
   }
 
+  renderProgress(){
+    if(this.props.app.isLoading){
+      return <LinearProgress color='rgb(255, 64, 129)'/>;
+    }
+  }
+
   render () {
     return (
       <div>
@@ -90,6 +97,7 @@ class App extends Component {
         </Toolbar>
         </header>
         <section>
+          {this.renderProgress()}
           {this.props.children}
         </section>
       </div>

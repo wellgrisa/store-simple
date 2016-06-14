@@ -13,7 +13,7 @@ import {
   List,
   ListItem
 } from 'material-ui';
-import Form from '../../components/document/form';
+import Form from '../../components/people/form';
 
 class Detail extends Component {
   componentWillMount (){

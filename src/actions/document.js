@@ -62,6 +62,7 @@ export function getAll(searchTerm){
     dispatch({ type: FETCH_REQUEST });
     try {
       dispatch({ type: ALL, items: await documentApi.getAll(), searchTerm });
+      dispatch({ type: FETCH_SUCCESS });
     } catch (error) {
       dispatch({ type: FETCH_FAIL, error });
     }

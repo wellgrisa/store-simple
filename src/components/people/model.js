@@ -32,6 +32,13 @@ export const dependent = {
       source : ['Conjugê', 'Filho'],
       col : '3'
     },
+    {
+      type : 'TextIcon',
+      key : 'money',
+      hintText : 'Renda 0.00',
+      col : '2',
+      icon : 'attach_money'
+    },
   ]
 }
 
