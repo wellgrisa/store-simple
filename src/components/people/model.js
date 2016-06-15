@@ -34,7 +34,7 @@ export const dependent = {
     },
     {
       type : 'TextIcon',
-      key : 'money',
+      key : 'income',
       hintText : 'Renda 0.00',
       col : '2',
       icon : 'attach_money'
@@ -115,6 +115,13 @@ export const model = {
       hintText : 'Trabalho',
       source : 'items',
       col : '4'
+    },
+    {
+      type : 'TextIcon',
+      key : 'income',
+      hintText : 'Renda 0.00',
+      col : '2',
+      icon : 'attach_money'
     },
     {
       type : 'Complex',

@@ -96,7 +96,7 @@ export const builder = (formFields, model, props) => {
 const buildList = (dependents, x, props) => (
   <div>
     <div style={{textAlign : 'right'}}>
-      <RaisedButton secondary label='Adicionar' onClick={() => dependents.addField()} />
+      <RaisedButton secondary label='Adicionar Dependente' onClick={() => dependents.addField()} />
     </div>
     {
       !dependents.length &&

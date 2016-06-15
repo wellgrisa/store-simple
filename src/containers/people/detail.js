@@ -50,4 +50,7 @@ class Detail extends Component {
   }
 }
 
-export default connect(reducers => ({document : reducers.document}))(Detail);
+export default connect(reducers => ({
+  document : reducers.document,
+  reduxForm : reducers.form
+}))(Detail);
