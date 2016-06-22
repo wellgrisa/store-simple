@@ -4,12 +4,19 @@ import { fields, model } from './model';
 import { validate } from './validation';
 import { Grid, Row } from 'react-inline-grid';
 import { builder } from '../common/builder';
+import Colors from 'material-ui/lib/styles/colors';
 
 import {
   TextField
 } from 'material-ui';
 
-@reduxForm({ form : 'people', fields, validate }, reducers => ({
+const styles = {
+  floatingLabelStyle: {
+    color: Colors.orange500,
+  }
+};
+
+@reduxForm({ form : 'people', fields : [...fields, 'totalIncome'], validate }, reducers => ({
   initialValues: reducers.document.selectedItem
 }), { addValue : addArrayValue } )
 export default class Form extends React.Component {
@@ -31,12 +38,19 @@ export default class Form extends React.Component {
   }
 
   render () {
+    const { fields } = this.props;
     return (
       <form>
         <Grid>
           <Row>
-            <h1 style={{ color : '#fff', float : 'right' }}>Renda Total: {this.getPersonIncome().toFixed(2)}</h1>
-            {builder(this.props.fields, model, this.props)}
+            <TextField
+              floatingLabelText='Renda Total'
+              disabled
+              floatingLabelStyle={styles.floatingLabelStyle}
+              {...fields['totalIncome']}
+              value={this.getPersonIncome().toFixed(2)}
+            />
+            { builder(fields, model, this.props) }
           </Row>
         </Grid>
       </form>

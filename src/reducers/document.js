@@ -10,8 +10,6 @@ import {
   FETCH_ITEM
 } from '../actions/document';
 
-import update from 'react-addons-update';
-
 import { ADD } from '../actions/document';
 
 const INITIAL_STATE = {
