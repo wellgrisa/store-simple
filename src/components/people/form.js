@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { reduxForm, addArrayValue  } from 'redux-form';
 import { fields, model } from './model';
 import { validate } from './validation';
-import { Grid, Row } from 'react-inline-grid';
+//import { Grid, Row } from 'react-inline-grid';
 import { builder } from '../common/builder';
-import Colors from 'material-ui/lib/styles/colors';
+import {orange500, blue500} from 'material-ui/styles/colors';
+
+import {Grid, Row, Col} from 'react-flexbox-grid';
 
 import {
   TextField
@@ -12,7 +14,7 @@ import {
 
 const styles = {
   floatingLabelStyle: {
-    color: Colors.orange500,
+    color: orange500,
   }
 };
 
@@ -41,15 +43,20 @@ export default class Form extends React.Component {
     const { fields } = this.props;
     return (
       <form>
-        <Grid>
+        <Grid className='grid'>
           <Row>
-            <TextField
-              floatingLabelText='Renda Total'
-              disabled
-              floatingLabelStyle={styles.floatingLabelStyle}
-              {...fields['totalIncome']}
-              value={this.getPersonIncome().toFixed(2)}
-            />
+            <Col xsOffset={10} xs={2} >
+              <TextField
+                floatingLabelText='Renda Total'
+                disabled
+                style={{ fontSize : '25px' }}
+                floatingLabelFocusStyle={{ textAlign : 'right'}}
+                floatingLabelStyle={styles.floatingLabelStyle}
+                underlineStyle={{ borderBottomStyle : 'none' }}
+                {...fields['totalIncome']}
+                value={this.getPersonIncome().toFixed(2)}
+              />
+            </Col>
             { builder(fields, model, this.props) }
           </Row>
         </Grid>

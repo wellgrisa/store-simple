@@ -3,18 +3,15 @@ body{
 	overflow-x: hidden;
 }
 
-.toolbar {
-	background-color: rgb(232,232,232) !important;
-}
-
-.toolbar-actions{
-	margin: 10 5 10 0;
-
-	.floating-icon{
-		margin-right: 20px,
-	}
-}
 
 .form-dynamic-children > div {
 	border-bottom: 1px solid #0097a7;
+  padding-bottom: 25px;
+}
+
+.grid{
+  box-sizing: border-box;
+  max-width: 1200px;
+  width: 90% !important;
+  margin: 0 auto;
 }

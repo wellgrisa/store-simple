@@ -4,7 +4,6 @@ import { App, About, Home, People, PersonDetail } from './containers';
 
 export default (
   <Route component={App}>
-    <IndexRoute component={People} />
     <Route path="/" component={People} />
     <Route path="/people" component={People} />
     <Route path="/person/add" component={PersonDetail} />

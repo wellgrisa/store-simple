@@ -4,18 +4,12 @@ export const dependent = {
       type : 'Icon',
       key : 'icon',
       icon : 'delete',
-      col : '1 bottom',
+      col : '1',
     },
     {
       type : 'Text',
       key : 'name',
       hintText : 'Nome',
-      col : '3'
-    },
-    {
-      type : 'Text',
-      key : 'surname',
-      hintText : 'Sobrenome',
       col : '3'
     },
     {

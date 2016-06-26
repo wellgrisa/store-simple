@@ -12,7 +12,6 @@ export default class SelectableToggle extends React.Component {
     this.setState({value});
   }
   render() {
-    console.log(this.props.value)
     return (
       <div>
         <label style={styles.label}>{this.props.hintText}</label>

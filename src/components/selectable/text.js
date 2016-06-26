@@ -16,7 +16,6 @@ export default class SelectableTextField extends React.Component {
           fullWidth
           floatingLabelText={this.props.hintText}
           {...this.props}
-          defaultValue={this.state.value}
           multiLine={false}
           errorText={this.props.error ? this.props.error : ''}>
           {

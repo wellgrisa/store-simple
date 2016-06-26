@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { List, ListItem } from 'material-ui';
-import { SelectableContainerEnhance } from 'material-ui/lib/hoc/selectable-enhance';
-let SelectableList = SelectableContainerEnhance(List);
+import { List, ListItem, MakeSelectable } from 'material-ui/List'
+let SelectableList = MakeSelectable(List);
 
 
 export default class Selectable extends Component {

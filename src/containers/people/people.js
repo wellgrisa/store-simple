@@ -13,10 +13,27 @@ import {
   List,
   FontIcon,
   ListItem,
-  ToolbarGroup
+  ToolbarGroup,
+  AppBar,
+  Drawer
 } from 'material-ui';
 
+import InputMask from 'react-maskedinput';
+
+import {Grid, Row, Col} from 'react-flexbox-grid';
+
 class People extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {open: false};
+    this.searchTerm = {};
+  }
+
+  handleToggle = () => this.setState({open: !this.state.open});
+
+  handleClose = () => this.setState({open: false});
+
   componentWillMount (){
     this.props.dispatch(getAll());
     this.props.dispatch(setToolbarButtons([
@@ -33,22 +50,48 @@ class People extends Component {
     this.props.dispatch(select(document));
   }
 
-  componentWillUpdate(nextProps, nextState) {
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps.document.selectedLength !== this.props.document.selectedLength){
       this.props.dispatch(setToolbarButtons(this.getToolbarButtons()));
+    }
+  }  
+
+  onQuickSearchChanged(){
+    let value = this.quickSearch.getValue();
+
+    let regexValue = new RegExp(value, 'ig');
+
+    this.props.dispatch(getAll({ $or : [ { name: { $regex : regexValue } }, { cpf: { $regex : regexValue } }]}));
   }
 
-  onSearchChanged(){
-    let searchTerm = this.searchTerm.getValue();
-    this.props.dispatch(getAll(x => x.name.includes(searchTerm)));
+  onComposedSearch(){
+    let searchCriteria = Object.keys(this.searchTerm).reduce((x, y) => {
+      let value = this.searchTerm[y].getValue();
+      if(value){
+        x.push({ [y] : { $regex : new RegExp(value, 'ig') }})
+      } 
+      return x;
+    },[]);
+    
+    let searchTerm = searchCriteria.length > 1 
+      ? { $or : searchCriteria }
+      : searchCriteria[0];
+
+    this.props.dispatch(getAll(searchTerm));
   }
 
   getSearchGroupAction() {
-    return [ <ToolbarGroup>
-      <FontIcon className="material-icons">search</FontIcon>
+    return [ <ToolbarGroup style={{ width : '100%' }}>
+      <FontIcon 
+        style={{ float : 'left' }} 
+        onTouchTap={this.handleToggle}
+        className="material-icons">search
+      </FontIcon>
       <TextField
-        ref={node => this.searchTerm = node}
-        style={{ float : 'left'}}
-        onChange={::this.onSearchChanged}
+        style={{ float : 'left' }}
+        fullWidth
+        ref={node => this.quickSearch = node}
+        onChange={::this.onQuickSearchChanged}
         hintText="Busca"
       />
     </ToolbarGroup> ];
@@ -85,11 +128,12 @@ class People extends Component {
   }
 
   renderDocuments() {
+    
     const listItems = this.props.document.items.map(x => {
       return <ListItem
         key={x._id}
         primaryText={x.name}
-        leftCheckbox={<Checkbox defaultChecked={x.selected} onClick={::this.onSelect.bind(this, x)}/>} />
+        leftCheckbox={<Checkbox checked={x.selected} onClick={::this.onSelect.bind(this, x)}/>} />
     });
 
     return <List>
@@ -97,12 +141,54 @@ class People extends Component {
     </List>;
   }
 
+  renderFilterDrawer () {
+    return <Drawer
+      docked={false}
+      width={500}
+      openSecondary
+      open={this.state.open}
+      onRequestChange={(open) => this.setState({open})}
+      >
+      <AppBar title="Filtrar por:" />
+      <Grid className='grid'>
+        <Row>
+          <Col xs={12}>                
+            <TextField
+              style={{ float : 'left' }}
+              fullWidth
+              ref={node => this.searchTerm.name = node}
+              hintText="Nome"
+            />
+            <TextField
+              style={{ float : 'left' }}
+              fullWidth
+              ref={node => this.searchTerm.income = node}
+              hintText="Renda"
+            />
+            <TextField
+              style={{ float : 'left' }}
+              fullWidth
+              ref={node => this.searchTerm.cpf = node}
+              hintText="CPF"
+            />
+            <RaisedButton
+              primary
+              style={{ float : 'right' }}
+              label="Buscar"
+              onTouchTap={::this.onComposedSearch}
+            />
+          </Col>
+        </Row>
+      </Grid>
+    </Drawer>
+  }
 
   render () {
     return (
       <div style={{ marginTop : 20 }}>
         <div className='container'>
           {this.renderDocuments()}
+          {this.renderFilterDrawer()}
         </div>
       </div>
     );

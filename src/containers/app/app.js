@@ -1,12 +1,12 @@
 import '../../style';
 
-import ThemeManager from 'material-ui/lib/styles/theme-manager';
-import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
-import DarkRawTheme from 'material-ui/lib/styles/raw-themes/dark-raw-theme';
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { title } from '../../actions/app';
+import { menuClicked } from '../../actions/app';
 
 import {
   AppBar,
@@ -24,24 +24,23 @@ import {
   Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle
 } from 'material-ui';
 
-import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 import { SelectableList } from '../../components/selectable';
 
 const menuitems = [
-  { primaryText: 'Inicio', path: '/'},
-  { primaryText: 'Pessoas', path: '/people'},
-  { primaryText: 'Sobre', path: '/about'}
+  { key: 'index', primaryText: 'Inicio', path: '/'},
+  { key: 'people', primaryText: 'Pessoas', path: '/people'},
+  { key: 'about', primaryText: 'Sobre', path: '/about'}
 ];
 
-@ThemeDecorator(ThemeManager.getMuiTheme(DarkRawTheme))
 class App extends Component {
   static propTypes = {
       children: PropTypes.any.isRequired,
   }
 
   handleLinkClick(menuItem){
-    this.props.dispatch(title(menuItem.primaryText));
+    this.props.dispatch(menuClicked(menuItem));
     this.props.dispatch(push(menuItem.path));
   }
 
@@ -61,46 +60,42 @@ class App extends Component {
 
   renderMenuItems() {
     return menuitems.map((x, i) =>
-      <MenuItem key={i} value={i} onTouchTap={::this.handleLinkClick.bind(this, x)} primaryText={x.primaryText} />
+      <MenuItem key={x.key} value={x.key} onTouchTap={::this.handleLinkClick.bind(this, x)} primaryText={x.primaryText} />
     );
   }
 
   renderProgress(){
     if(this.props.app.isLoading){
-      return <LinearProgress color='rgb(255, 64, 129)'/>;
+      return <LinearProgress 
+        style={{ position : 'absolute', top : 55 }} 
+        color='rgb(255, 64, 129)'
+      />;
     }
   }
 
   render () {
     return (
-      <div>
-        <header>
-        <Toolbar style={{backgroundColor: 'rgb(0, 188, 212)'}}>
-          <ToolbarGroup firstChild>
-            <ToolbarTitle style={{ float : 'right' }} text={this.props.app.title} />
-            <IconMenu
-              iconButtonElement={
-                <IconButton touch={true} style={{ marginTop : 5 }}>
-                <FontIcon className="material-icons">
-                  menu
-                </FontIcon>
-                </IconButton>
-              }
-            >
-              {this.renderMenuItems()}
-            </IconMenu>
-          </ToolbarGroup>
-          {this.renderCustomGroups()}
-          <ToolbarGroup float={'right'}>
-            {this.renderToolbarButtons(this.props.app.buttons)}
-          </ToolbarGroup>
-        </Toolbar>
-        </header>
-        <section>
+      <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+        <div>
+          <header>
+            <Toolbar style={{backgroundColor: 'rgb(0, 188, 212)'}}>
+              <ToolbarGroup firstChild={true}>
+                <DropDownMenu value={this.props.app.currentView}>
+                  {this.renderMenuItems()}
+                </DropDownMenu>
+              </ToolbarGroup>
+              {this.renderCustomGroups()}
+              <ToolbarGroup float={'right'}>
+                  {this.renderToolbarButtons(this.props.app.buttons)}
+              </ToolbarGroup>
+            </Toolbar>
+          </header>
+          <section>
           {this.renderProgress()}
           {this.props.children}
-        </section>
-      </div>
+          </section>
+        </div>
+      </MuiThemeProvider>      
     );
   }
 }

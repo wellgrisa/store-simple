@@ -16,7 +16,7 @@ import {
   SelectableText
 } from '../selectable/';
 
-import { Grid, Row, Cell } from 'react-inline-grid';
+import {Grid, Row, Col} from 'react-flexbox-grid';
 
 export const builder = (formFields, model, props) => {
 
@@ -83,20 +83,18 @@ export const builder = (formFields, model, props) => {
       break;
     }
 
-    return <Cell key={i} is={x.col || '12'}>{builtField}</Cell>;
+    return <Col key={i} xs={Number(x.col) || 12}>{builtField}</Col>;
   });
 
-  return <Grid>
-      <Row is='start nospace'>
+  return <Row middle="xs">
         {builtElements}
-      </Row>
-    </Grid>;
+      </Row>;
 }
 
 const buildList = (dependents, x, props) => (
   <div>
-    <div style={{textAlign : 'right'}}>
-      <RaisedButton secondary label='Adicionar Dependente' onClick={() => dependents.addField()} />
+    <div style={{textAlign : 'right', marginTop : 20}}>
+      <RaisedButton primary label='Adicionar Dependente' onClick={() => dependents.addField()} />
     </div>
     {
       !dependents.length &&
@@ -104,7 +102,7 @@ const buildList = (dependents, x, props) => (
         <span style={{ color : '#fff' }}>Sem Dependentes Cadastrados</span>
       </div>
     }
-    dependents.length && <div className='form-dynamic-children'> <Divider style={{ backgroundColor : '#0097a7' }} />
+    <div className='form-dynamic-children'> <Divider style={{ backgroundColor : '#0097a7', marginTop : 20 }} />
     {
       dependents.map((dependentFields, i) => {
         x.model.fields[x.model.fields.findIndex(x => x.type === 'Icon')].onClick = () => dependents.removeField(i);

@@ -3,6 +3,13 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 
 .material-icons{
 	font-size: 24px !important;
-	font-family: 'Material Icons' !important;
-	cursor: pointer;
+	font-family: 'Material Icons' !important; 
+  cursor: pointer;
+}
+
+.grid{
+  box-sizing: border-box;
+  max-width: 1200px;
+  width: 90%;
+  margin: 0 auto;
 }

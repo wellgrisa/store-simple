@@ -1,13 +1,14 @@
 import {
   FETCH_REQUEST,
   FETCH_SUCCESS,
-  CHANGE_TITLE,
+  MENU_CLICKED,
   SET_TOOLBAR_BUTTONS,
   SET_TOOLBAR_CUSTOM_GROUP
 } from '../actions/app';
 
 const INITIAL_STATE = {
   title : 'Início',
+  currentView : 'people',
   buttons : [],
   customGroups : [],
   isLoading : false
@@ -15,10 +16,11 @@ const INITIAL_STATE = {
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case CHANGE_TITLE:
+    case MENU_CLICKED:
       return {
         ...state,
-        title : action.title
+        title : action.menuItem.primaryText,
+        currentView : action.menuItem.key
       };
     case SET_TOOLBAR_BUTTONS:
       return {

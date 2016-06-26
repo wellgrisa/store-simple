@@ -8,8 +8,8 @@ export async function save(document){
   }
 }
 
-export async function getAll(){
-  return await documents.find({});
+export async function getAll(searchTerm = {}){
+  return await documents.find(searchTerm);
 }
 
 export async function remove (items) {
