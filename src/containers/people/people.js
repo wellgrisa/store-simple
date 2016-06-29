@@ -22,6 +22,8 @@ import InputMask from 'react-maskedinput';
 
 import {Grid, Row, Col} from 'react-flexbox-grid';
 
+import ipc from 'ipc';
+
 class People extends Component {
 
   constructor(props) {
@@ -40,6 +42,10 @@ class People extends Component {
       {
         label : 'add',
         action : () => this.props.dispatch(push('person/add'))
+      },
+      {
+        label : 'print',
+        action : () => ipc.send('toggle-insert-view')
       },
     ]))
 
