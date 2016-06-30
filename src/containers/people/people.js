@@ -17,18 +17,23 @@ import {
   AppBar,
   Drawer
 } from 'material-ui';
+import classnames from 'classnames';
 
 import InputMask from 'react-maskedinput';
 
 import {Grid, Row, Col} from 'react-flexbox-grid';
 
-import ipc from 'ipc';
+import { ipcRenderer } from 'electron';
+
 
 class People extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {open: false};
+    this.state = {
+      open: false,
+      printMode: false
+    };
     this.searchTerm = {};
   }
 
@@ -45,11 +50,15 @@ class People extends Component {
       },
       {
         label : 'print',
-        action : () => ipc.send('toggle-insert-view')
+        action : () => this.onPrintClick() 
       },
     ]))
 
     this.props.dispatch(setToolbarCustomGroup(this.getSearchGroupAction()));
+  }
+
+  onPrintClick () {
+    ipcRenderer.send('toggle-insert-view', this.buildComposedSearch());
   }
 
   onSelect (document) {
@@ -62,6 +71,14 @@ class People extends Component {
     }
   }  
 
+  componentDidMount() {
+    ipc.on('ping', function(arg) {
+ console.log("arg ", arg);
+      
+      
+    });
+  }  
+
   onQuickSearchChanged(){
     let value = this.quickSearch.getValue();
 
@@ -71,6 +88,12 @@ class People extends Component {
   }
 
   onComposedSearch(){
+    let searchTerm = this.buildComposedSearch();
+
+    this.props.dispatch(getAll(searchTerm));
+  }
+
+  buildComposedSearch () {
     let searchCriteria = Object.keys(this.searchTerm).reduce((x, y) => {
       let value = this.searchTerm[y].getValue();
       if(value){
@@ -83,7 +106,7 @@ class People extends Component {
       ? { $or : searchCriteria }
       : searchCriteria[0];
 
-    this.props.dispatch(getAll(searchTerm));
+    return searchTerm;
   }
 
   getSearchGroupAction() {
@@ -192,7 +215,7 @@ class People extends Component {
   render () {
     return (
       <div style={{ marginTop : 20 }}>
-        <div className='container'>
+        <div className={classnames('container', this.state.printMode ? 'print-mode' : '')}>
           {this.renderDocuments()}
           {this.renderFilterDrawer()}
         </div>

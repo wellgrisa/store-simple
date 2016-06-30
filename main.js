@@ -4,6 +4,7 @@ const ipc = require('ipc');
 const app = electron.app;  // Module to control application life.
 const BrowserWindow = electron.BrowserWindow;
 const dialog = electron.dialog;
+const { ipcMain } = require('electron');
 var fs = require('fs');
 
 var mainWindow = null;
@@ -27,17 +28,21 @@ app.on('ready', function() {
   });
 });
 
-ipc.on('toggle-insert-view', function() {
-  savePDF();
-    // if(!printWindow) {
-    //     createPrintWindow();
-    // }
-    // return (!printWindow.isClosed() && printWindow.isVisible()) ? printWindow.hide() : printWindow.show();
+ipcMain.on('toggle-insert-view', (event, arg) => {
+  if(!printWindow) {
+      createPrintWindow(arg);
+  }
+
+  printWindow.show();
 });
 
-function createPrintWindow(){
+function createPrintWindow(args){
   printWindow = new BrowserWindow({'auto-hide-menu-bar':true});
-  printWindow.loadUrl('file://' + __dirname + '/print.html');
+  //printWindow.loadUrl('file://' + __dirname + '/print.html');
+  printWindow.loadURL('file://' + __dirname + '/index.html');
+  printWindow.webContents.on('did-finish-load', () => {
+    printWindow.webContents.send('ping', args);
+  });
   printWindow.on('closed',function() {
       printWindow = null;
   });
