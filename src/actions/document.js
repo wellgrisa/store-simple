@@ -5,6 +5,7 @@ export const EDIT = 'EDIT';
 export const GET = 'GET';
 export const ALL = 'ALL';
 export const SAVE = 'SAVE';
+export const RESET = 'RESET';
 export const SELECT = 'SELECT';
 export const FETCH_ITEM = 'FETCH_ITEM';
 export const FETCH_REQUEST = 'FETCH_REQUEST';
@@ -14,6 +15,10 @@ export const TOGGLE_SHOW_DIALOG = 'TOGGLE_SHOW_DIALOG';
 
 export function next() {
   return { type: NEXT_QUOTE };
+}
+
+export function reset() {
+  return { type: RESET };
 }
 
 export function adding() {

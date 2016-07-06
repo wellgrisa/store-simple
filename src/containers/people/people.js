@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import { add, getAll, remove, edit, select } from '../../actions/document';
-import { setToolbarButtons, setToolbarCustomGroup } from '../../actions/app';
+import { add, getAll, remove, edit, select, reset } from '../../actions/document';
+import { menuClicked } from '../../actions/app';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { reduxForm } from 'redux-form';
@@ -37,13 +37,18 @@ class People extends Component {
     this.searchTerm = {};
   }
 
+  static contextTypes = {
+    setToolbarButtons: PropTypes.func.isRequired,
+    setToolbarGroups: PropTypes.func.isRequired,
+  }
+
   handleToggle = () => this.setState({open: !this.state.open});
 
   handleClose = () => this.setState({open: false});
 
   componentWillMount (){
     this.props.dispatch(getAll());
-    this.props.dispatch(setToolbarButtons([
+    this.context.setToolbarButtons([
       {
         label : 'add',
         action : () => this.props.dispatch(push('person/add'))
@@ -52,13 +57,19 @@ class People extends Component {
         label : 'print',
         action : () => this.onPrintClick() 
       },
-    ]))
+    ]);
 
-    this.props.dispatch(setToolbarCustomGroup(this.getSearchGroupAction()));
+    this.context.setToolbarGroups(this.getSearchGroupAction());
   }
 
+  componentWillUnmount() {
+    this.props.dispatch(reset());
+  }  
+
   onPrintClick () {
-    ipcRenderer.send('toggle-insert-view', this.buildComposedSearch());
+    //ipcRenderer.send('toggle-insert-view', this.buildComposedSearch());
+    this.props.dispatch(menuClicked({ key: 'report-people' }));
+    this.props.dispatch(push('people/report'));
   }
 
   onSelect (document) {
@@ -67,16 +78,8 @@ class People extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if(prevProps.document.selectedLength !== this.props.document.selectedLength){
-      this.props.dispatch(setToolbarButtons(this.getToolbarButtons()));
+      this.context.setToolbarButtons(this.getToolbarButtons());
     }
-  }  
-
-  componentDidMount() {
-    ipc.on('ping', function(arg) {
- console.log("arg ", arg);
-      
-      
-    });
   }  
 
   onQuickSearchChanged(){
@@ -214,7 +217,7 @@ class People extends Component {
 
   render () {
     return (
-      <div style={{ marginTop : 20 }}>
+      <div style={{ marginTop : 30 }}>
         <div className={classnames('container', this.state.printMode ? 'print-mode' : '')}>
           {this.renderDocuments()}
           {this.renderFilterDrawer()}
@@ -224,4 +227,7 @@ class People extends Component {
   }
 }
 
-export default connect(reducers => ({document : reducers.document}))(People);
+export default connect(reducers => ({
+  document : reducers.document,
+  app : reducers.app
+}))(People);

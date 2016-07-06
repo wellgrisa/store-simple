@@ -48,6 +48,10 @@ function createPrintWindow(args){
   });
 }
 
+ipcMain.on('print-view', (event, arg) => {
+  savePDF();
+});
+
 function savePDF() {
   if (!mainWindow) {
     dialog.showErrorBox('Error', "The printing window isn't created");

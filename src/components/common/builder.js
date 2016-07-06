@@ -18,6 +18,7 @@ import {
 
 import {Grid, Row, Col} from 'react-flexbox-grid';
 
+
 export const builder = (formFields, model, props) => {
 
   let builtElements = model.fields.map((x, i) => {

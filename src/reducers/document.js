@@ -7,7 +7,8 @@ import {
   EDIT,
   SAVE,
   SELECT,
-  FETCH_ITEM
+  FETCH_ITEM,
+  RESET
 } from '../actions/document';
 
 import { ADD } from '../actions/document';
@@ -28,6 +29,10 @@ export default function reducer(state = INITIAL_STATE, action) {
         ...state,
         selectedItem : {},
         showDialog : true
+      };
+    case RESET:
+      return {
+        ...INITIAL_STATE
       };
     case SAVE:
       let existentItemIndex = action.result[1]

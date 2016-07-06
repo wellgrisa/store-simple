@@ -1,18 +1,14 @@
 import '../../style';
 
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import { BaseTheme } from '../../style/theme';
+import { menuClicked, setToolbarButtons, setToolbarCustomGroup } from '../../actions/app';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { menuClicked } from '../../actions/app';
 
 import {
-  AppBar,
-  LeftNav,
-  List,
-  ListItem,
   IconMenu,
   MenuItem,
   RaisedButton, IconButton,
@@ -24,19 +20,23 @@ import {
   Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle
 } from 'material-ui';
 
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-
-import { SelectableList } from '../../components/selectable';
-
-const menuitems = [
-  { key: 'index', primaryText: 'Inicio', path: '/'},
-  { key: 'people', primaryText: 'Pessoas', path: '/people'},
-  { key: 'about', primaryText: 'Sobre', path: '/about'}
-];
-
 class App extends Component {
   static propTypes = {
       children: PropTypes.any.isRequired,
+  }
+
+  static childContextTypes = {
+    setToolbarButtons: PropTypes.func,
+    setToolbarGroups: PropTypes.func,
+    cleanToolbarGroups: PropTypes.func,
+  }
+
+  getChildContext() {
+    return {
+      setToolbarButtons: this.setToolbarButtons.bind(this),
+      setToolbarGroups: this.setToolbarGroups.bind(this),
+      cleanToolbarGroups: this.setToolbarGroups.bind(this)
+    };
   }
 
   handleLinkClick(menuItem){
@@ -52,13 +52,26 @@ class App extends Component {
     );
   }
 
+  setToolbarButtons (buttons) {
+    this.props.dispatch(setToolbarButtons(buttons));
+  }
+
+  setToolbarGroups (groups) {
+    this.props.dispatch(setToolbarCustomGroup(groups));
+  }
+
+  cleanToolbarGroups () {
+    this.props.dispatch(setToolbarCustomGroup([]));
+  }
+
   renderCustomGroups() {
-    if(this.props.app.customGroups.length){
+    const { app : { customGroups } } = this.props;
+    if(customGroups && customGroups.length){
       return this.props.app.customGroups;
     }
   }
 
-  renderMenuItems() {
+  renderMenuItems (menuitems) {
     return menuitems.map((x, i) =>
       <MenuItem key={x.key} value={x.key} onTouchTap={::this.handleLinkClick.bind(this, x)} primaryText={x.primaryText} />
     );
@@ -74,19 +87,21 @@ class App extends Component {
   }
 
   render () {
+    const { app } = this.props;
+    
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+      <MuiThemeProvider muiTheme={getMuiTheme(BaseTheme)}>
         <div>
           <header>
             <Toolbar style={{backgroundColor: 'rgb(0, 188, 212)'}}>
               <ToolbarGroup firstChild={true}>
-                <DropDownMenu value={this.props.app.currentView}>
-                  {this.renderMenuItems()}
+                <DropDownMenu value={app.currentView}>
+                  {this.renderMenuItems(app.menuItems)}
                 </DropDownMenu>
               </ToolbarGroup>
               {this.renderCustomGroups()}
               <ToolbarGroup float={'right'}>
-                  {this.renderToolbarButtons(this.props.app.buttons)}
+                  {this.renderToolbarButtons(app.buttons)}
               </ToolbarGroup>
             </Toolbar>
           </header>
