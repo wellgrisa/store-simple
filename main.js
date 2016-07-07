@@ -1,4 +1,7 @@
 'use strict';
+
+if (require('electron-squirrel-startup')) return;
+
 const electron = require('electron');
 const ipc = require('ipc');
 const app = electron.app;  // Module to control application life.
@@ -27,6 +30,18 @@ app.on('ready', function() {
     mainWindow = null;
   });
 });
+
+const autoUpdater = require('auto-updater');
+const appVersion = require('./package.json').version;
+const os = require('os').platform();
+
+autoUpdater.setFeedURL('https://update-me-plz.herokuapp.com/update/win32/' + appVersion);
+
+mainWindow.webContents.once("did-frame-finish-load", (event) => {
+  autoUpdater.checkForUpdates()
+})
+
+autoUpdater.quitAndInstall();
 
 ipcMain.on('toggle-insert-view', (event, arg) => {
   if(!printWindow) {
