@@ -1,7 +1,5 @@
 'use strict';
-
-if (require('electron-squirrel-startup')) return;
-
+if(require('electron-squirrel-startup')) return;
 const electron = require('electron');
 const ipc = require('ipc');
 const app = electron.app;  // Module to control application life.
@@ -18,10 +16,11 @@ app.on('window-all-closed', function() {
     app.quit();
   }
 });
+
 app.on('ready', function() {
   mainWindow = new BrowserWindow({
     darkTheme: true
-  });
+  });  
 
   mainWindow.maximize();
   mainWindow.loadURL('file://' + __dirname + '/index.html');
@@ -29,19 +28,57 @@ app.on('ready', function() {
   mainWindow.on('closed', function() {
     mainWindow = null;
   });
+
+  const autoUpdater = require('auto-updater');
+  const appVersion = require('./package.json').version;
+  const os = require('os').platform();
+  //https://update-me-plz.herokuapp.com/update/win32/0.0.9
+  autoUpdater.setFeedURL('https://update-me-plz.herokuapp.com/update/win32/0.9.0');
+
+  autoUpdater
+    .on('error', function(){
+      console.log(arguments);
+      dialog.showMessageBox({ message: arguments, buttons: ["OK"] });
+    })
+    .on('checking-for-update', function() {
+      console.log('Checking for update');
+      dialog.showMessageBox({ message: "checking-for-update! :-)", buttons: ["OK"] });
+    })
+    .on('update-available', function() {
+      console.log('Update available');
+      dialog.showMessageBox({ message: 'update-available', buttons: ["OK"] });
+    })
+    .on('update-not-available', function() {
+      console.log('Update not available');
+      dialog.showMessageBox({ message: 'Update not available', buttons: ["OK"] });
+    })
+    .on('update-downloaded', function() {
+      notifyUserAboutUpdate();
+      autoUpdater.quitAndInstall();
+    });  
+
+    mainWindow.webContents.on("did-frame-finish-load", (event) => {
+      autoUpdater.checkForUpdates()
+    })
 });
 
-const autoUpdater = require('auto-updater');
-const appVersion = require('./package.json').version;
-const os = require('os').platform();
+function notifyUserAboutUpdate() {
+  const buttons = ['Sure, get me a new version!', 'Nah, I\'m good, I can wait.'];
+  const options = {
+    type: 'question',
+    message: 'Hey, new version of app is downloaded! Do you want to restart it now and get the newest version?',
+    cancelId: -1,
+    buttons,
+  };
 
-autoUpdater.setFeedURL('https://update-me-plz.herokuapp.com/update/win32/' + appVersion);
+  // dialog.showMessageBox(window, options, function(response) {
+  //   if (response == 0) {
+  //     autoUpdater.quitAndInstall();
+  //   }
+  // });
 
-mainWindow.webContents.once("did-frame-finish-load", (event) => {
-  autoUpdater.checkForUpdates()
-})
-
-autoUpdater.quitAndInstall();
+  dialog.showMessageBox({ message: "The file has been saved! :-)", buttons: ["OK"] });
+}
 
 ipcMain.on('toggle-insert-view', (event, arg) => {
   if(!printWindow) {

@@ -44,7 +44,8 @@ module.exports = {
             test: /\.css$/,
             loader: 'style!css?modules',
             include: /flexboxgrid/,
-          }
+          },
+          { test: /\.tsx?$/, loader: 'ts-loader' },
         ]
     },
     plugins: [
@@ -62,5 +63,5 @@ module.exports = {
     ],
     resolve: {
         extensions: ['', '.js', '.jsx', '.json']
-    }
+    },
 }
