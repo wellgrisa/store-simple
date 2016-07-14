@@ -7,6 +7,10 @@
   "browser": {
     "vertx": false
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wellgrisa/store-simple"
+  },
   "license": "ISC",
   "dependencies": {
     "debug": "^2.2.0",
