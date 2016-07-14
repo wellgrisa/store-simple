@@ -10,6 +10,7 @@ var fs = require('fs');
 const path = require('path');
 var mainWindow = null;
 var printWindow = null;
+const getConfig = require ('./config').get;
 
 const devMode = (process.argv || []).indexOf('--dev') !== -1;
 
@@ -27,9 +28,9 @@ app.on('ready', function() {
   mainWindow.maximize();
 
   const entryBasePath = devMode ? 'http://localhost:8080' : ('file://' + path.resolve(__dirname, '..'));
+
   mainWindow.loadURL(entryBasePath + '/static/index.html');
-  //mainWindow.loadURL('file://' + path.join(__dirname, '../Renderer/', 'index.html?devMode=' + devMode));
-  //mainWindow.loadURL('file://' + __dirname + '/index.html');
+
   if(devMode) {
     mainWindow.webContents.openDevTools();
   }
@@ -38,10 +39,8 @@ app.on('ready', function() {
   });
 
   const autoUpdater = require('auto-updater');
-  //const appVersion = require('./package.json').version;
-  const os = require('os').platform();
-  //https://update-me-plz.herokuapp.com/update/win32/0.0.9
-  autoUpdater.setFeedURL('https://update-me-plz.herokuapp.com/update/win32/0.9.0');
+
+  autoUpdater.setFeedURL('https://update-me-plz.herokuapp.com/update/win32/' + getConfig().version);
 
   autoUpdater
     .on('error', function(){
@@ -52,7 +51,7 @@ app.on('ready', function() {
       dialog.showMessageBox({ message: "checking-for-update! :-)", buttons: ["OK"] });
     })
     .on('update-available', function() {
-      console.log('Update available');
+  git     console.log('Update available');
       dialog.showMessageBox({ message: 'update-available', buttons: ["OK"] });
     })
     .on('update-not-available', function() {

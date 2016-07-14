@@ -14,6 +14,7 @@ var fs = require('fs');
 var path = require('path');
 var mainWindow = null;
 var printWindow = null;
+var getConfig = require('./config').get;
 
 var devMode = (process.argv || []).indexOf('--dev') !== -1;
 
@@ -31,10 +32,10 @@ app.on('ready', function () {
   mainWindow.maximize();
 
   var entryBasePath = devMode ? 'http://localhost:8080' : 'file://' + path.resolve(__dirname, '..');
+
   mainWindow.loadURL(entryBasePath + '/static/index.html');
-  //mainWindow.loadURL('file://' + path.join(__dirname, '../Renderer/', 'index.html?devMode=' + devMode));
-  //mainWindow.loadURL('file://' + __dirname + '/index.html');
-  if (process.env.NODE_ENV !== 'production') {
+
+  if (devMode) {
     mainWindow.webContents.openDevTools();
   }
   mainWindow.on('closed', function () {
@@ -42,10 +43,8 @@ app.on('ready', function () {
   });
 
   var autoUpdater = require('auto-updater');
-  //const appVersion = require('./package.json').version;
-  var os = require('os').platform();
-  //https://update-me-plz.herokuapp.com/update/win32/0.0.9
-  autoUpdater.setFeedURL('https://update-me-plz.herokuapp.com/update/win32/0.9.0');
+
+  autoUpdater.setFeedURL('https://update-me-plz.herokuapp.com/update/win32/' + getConfig().version);
 
   autoUpdater.on('error', function () {
     console.log(arguments);

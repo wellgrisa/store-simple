@@ -1,6 +1,6 @@
 {
   "name": "store",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "author": "Wellington Grisa <wellington.grisa@gmail.com>",
   "description": "This is the first version of a simple storage app.",
   "main": "./out/browser/main.js",
