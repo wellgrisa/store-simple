@@ -1,11 +1,11 @@
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 module.exports = {
-    entry: './src/index.js',
+    entry: './src/renderer/index.js',
     output: {
         filename: 'bundle.js',
-        path: path.join(__dirname, 'static'),
-        publicPath: 'http://localhost:8080/build/'
+        path: path.join(__dirname, 'app', 'out', 'static'),
     },
     target: 'electron',
     module: {
@@ -57,8 +57,8 @@ module.exports = {
         'window.$': 'jquery',
         'Hammer': 'hammerjs/hammer',
       }),
-      new webpack.DefinePlugin({
-        WELL: true,
+      new HtmlWebpackPlugin({
+        template: 'src/renderer/index.html',
       }),
     ],
     resolve: {

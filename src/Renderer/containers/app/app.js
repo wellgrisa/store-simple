@@ -100,7 +100,7 @@ class App extends Component {
                 </DropDownMenu>
               </ToolbarGroup>
               {this.renderCustomGroups()}
-              <ToolbarGroup float={'right'}>
+              <ToolbarGroup>
                   {this.renderToolbarButtons(app.buttons)}
               </ToolbarGroup>
             </Toolbar>

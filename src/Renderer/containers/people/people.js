@@ -184,7 +184,7 @@ class People extends Component {
       <AppBar title="Filtrar por:" />
       <Grid className='grid'>
         <Row>
-          <Col xs={12}>                
+          <Col>                
             <TextField
               style={{ float : 'left' }}
               fullWidth

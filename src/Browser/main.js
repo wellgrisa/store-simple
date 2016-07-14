@@ -7,9 +7,11 @@ const BrowserWindow = electron.BrowserWindow;
 const dialog = electron.dialog;
 const { ipcMain } = require('electron');
 var fs = require('fs');
-
+const path = require('path');
 var mainWindow = null;
 var printWindow = null;
+
+const devMode = (process.argv || []).indexOf('--dev') !== -1;
 
 app.on('window-all-closed', function() {
   if (process.platform != 'darwin') {
@@ -23,14 +25,20 @@ app.on('ready', function() {
   });  
 
   mainWindow.maximize();
-  mainWindow.loadURL('file://' + __dirname + '/index.html');
-  mainWindow.webContents.openDevTools();
+
+  const entryBasePath = devMode ? 'http://localhost:8080' : ('file://' + path.resolve(__dirname, '..'));
+  mainWindow.loadURL(entryBasePath + '/static/index.html');
+  //mainWindow.loadURL('file://' + path.join(__dirname, '../Renderer/', 'index.html?devMode=' + devMode));
+  //mainWindow.loadURL('file://' + __dirname + '/index.html');
+  if(devMode) {
+    mainWindow.webContents.openDevTools();
+  }
   mainWindow.on('closed', function() {
     mainWindow = null;
   });
 
   const autoUpdater = require('auto-updater');
-  const appVersion = require('./package.json').version;
+  //const appVersion = require('./package.json').version;
   const os = require('os').platform();
   //https://update-me-plz.herokuapp.com/update/win32/0.0.9
   autoUpdater.setFeedURL('https://update-me-plz.herokuapp.com/update/win32/0.9.0');
@@ -38,7 +46,6 @@ app.on('ready', function() {
   autoUpdater
     .on('error', function(){
       console.log(arguments);
-      dialog.showMessageBox({ message: arguments, buttons: ["OK"] });
     })
     .on('checking-for-update', function() {
       console.log('Checking for update');
@@ -70,12 +77,6 @@ function notifyUserAboutUpdate() {
     cancelId: -1,
     buttons,
   };
-
-  // dialog.showMessageBox(window, options, function(response) {
-  //   if (response == 0) {
-  //     autoUpdater.quitAndInstall();
-  //   }
-  // });
 
   dialog.showMessageBox({ message: "The file has been saved! :-)", buttons: ["OK"] });
 }
