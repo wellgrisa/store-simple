@@ -6,7 +6,7 @@
   "main": "./out/browser/main.js",
   "scripts": {
     "pack": "build --dir",
-    "dist": "build",
+    "dist": "npm run compile && build",
     "start": "babel-node cross.js run",
     "win": "set NODE_ENV=development&&npm run electron",
     "production": "set NODE_ENV=production&&npm run electron",
