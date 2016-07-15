@@ -28,12 +28,11 @@ app.on('ready', function() {
   mainWindow.maximize();
 
   const entryBasePath = devMode ? 'http://localhost:8080' : ('file://' + path.resolve(__dirname, '..'));
-
+  
   mainWindow.loadURL(entryBasePath + '/static/index.html');
 
-  if(devMode) {
-    mainWindow.webContents.openDevTools();
-  }
+  mainWindow.webContents.openDevTools();
+  
   mainWindow.on('closed', function() {
     mainWindow = null;
   });
@@ -51,7 +50,7 @@ app.on('ready', function() {
       dialog.showMessageBox({ message: "checking-for-update! :-)", buttons: ["OK"] });
     })
     .on('update-available', function() {
-  git     console.log('Update available');
+      console.log('Update available');
       dialog.showMessageBox({ message: 'update-available', buttons: ["OK"] });
     })
     .on('update-not-available', function() {

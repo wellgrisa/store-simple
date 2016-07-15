@@ -5,4 +5,4 @@ static
 src/data/*json
 .vscode/
 dist/
-
+app/out

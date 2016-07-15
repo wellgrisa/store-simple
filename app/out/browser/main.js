@@ -35,9 +35,8 @@ app.on('ready', function () {
 
   mainWindow.loadURL(entryBasePath + '/static/index.html');
 
-  if (devMode) {
-    mainWindow.webContents.openDevTools();
-  }
+  mainWindow.webContents.openDevTools();
+
   mainWindow.on('closed', function () {
     mainWindow = null;
   });
