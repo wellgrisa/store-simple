@@ -19,7 +19,7 @@
     "dist-old": "./node_modules/.bin/build \"dist/win/src-win32-ia32\" --platform=win",
     "postinstall": "install-app-deps",
     "dev:webpack": "./node_modules/.bin/webpack-dev-server --hot --inline --port 8080 --config webpack.dev.config.js",
-    "dev:electron": "cross-env NODE_ENV=DEVELOPMENT&&electron src/Browser/main.js --dev",
+    "dev:electron": "cross-env NODE_ENV=DEVELOPMENT&&electron app/out/browser/main.js --dev",
     "compile": "rimraf app/out && npm run compile:browser && npm run compile:renderer",
     "compile:browser": "cross-env NODE_ENV=production babel ./src/browser -d app/out/browser",
     "compile:renderer": "cross-env NODE_ENV=production webpack --progress --display-error-details --config ./webpack.prod.config"

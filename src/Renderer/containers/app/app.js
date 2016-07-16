@@ -1,12 +1,14 @@
 import '../../style';
 
 import { BaseTheme } from '../../style/theme';
-import { menuClicked, setToolbarButtons, setToolbarCustomGroup } from '../../actions/app';
+import { menuClicked, setToolbarButtons, setToolbarCustomGroup, setHotMessage } from '../../actions/app';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
+
+import { ipcRenderer } from 'electron';
 
 import {
   IconMenu,
@@ -17,7 +19,8 @@ import {
   DropDownMenu,
   TextField,
   LinearProgress,
-  Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle
+  Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle,
+  Snackbar
 } from 'material-ui';
 
 class App extends Component {
@@ -37,6 +40,18 @@ class App extends Component {
       setToolbarGroups: this.setToolbarGroups.bind(this),
       cleanToolbarGroups: this.setToolbarGroups.bind(this)
     };
+  }
+
+  componentDidMount() {
+    ipcRenderer.on('update:hotMessage', ::this.updateHotMessage);
+  }
+
+  componentWillUnmount() {
+    ipcRenderer.removeListener('update:hotMessage', ::this.updateHotMessage);
+  }
+
+  updateHotMessage (event, message) {
+    this.props.dispatch(setHotMessage(message));
   }
 
   handleLinkClick(menuItem){
@@ -67,7 +82,7 @@ class App extends Component {
   renderCustomGroups() {
     const { app : { customGroups } } = this.props;
     if(customGroups && customGroups.length){
-      return this.props.app.customGroups;
+      return this.props.app.customGroups.map((x, i) => <div style={{ width: '100%' }} key={i}>{x}</div>);
     }
   }
 
@@ -84,6 +99,10 @@ class App extends Component {
         color='rgb(255, 64, 129)'
       />;
     }
+  }
+
+  handleRequestClose () {
+    this.props.dispatch(setHotMessage(''));
   }
 
   render () {
@@ -108,6 +127,12 @@ class App extends Component {
           <section>
           {this.renderProgress()}
           {this.props.children}
+          <Snackbar
+            open={!!app.hotMessage}
+            message={app.hotMessage}
+            autoHideDuration={4000}
+            onRequestClose={::this.handleRequestClose}
+          />
           </section>
         </div>
       </MuiThemeProvider>      

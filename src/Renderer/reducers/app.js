@@ -5,6 +5,7 @@ import {
   SET_TOOLBAR_BUTTONS,
   SET_TOOLBAR_CUSTOM_GROUP,
   SET_MENU_ITEMS,
+  SET_HOT_MESSAGE,
 } from '../actions/app';
 
 const defaultMenuItems = [
@@ -18,7 +19,8 @@ const INITIAL_STATE = {
   buttons: [],
   customGroups: [],
   isLoading: false,
-  menuItems: defaultMenuItems
+  menuItems: defaultMenuItems,
+  hotMessage: '',
 };
 
 export default function reducer(state = INITIAL_STATE, action) {
@@ -49,6 +51,11 @@ export default function reducer(state = INITIAL_STATE, action) {
         ...state,
         isLoading : true,
       };
+    case SET_HOT_MESSAGE:
+      return {
+        ...state,
+        hotMessage: action.hotMessage
+      };      
     case FETCH_SUCCESS:
       return {
         ...state,
