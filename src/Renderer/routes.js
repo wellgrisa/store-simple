@@ -8,6 +8,7 @@ export default (
     <Route path="/people" component={People} />
     <Route path="/person/add" component={PersonDetail} />
     <Route path="/people/report" component={PeopleReport} />
+    <Route path="/person/edit" component={PersonDetail} />
     <Route path="/person/:id/edit" component={PersonDetail} />
     <Route path="/about" component={About} />
   </Route>

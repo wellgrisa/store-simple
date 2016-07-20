@@ -1,5 +1,5 @@
 export default {
   development : {
-    db : 'src/data/'
+    db : 'src/Renderer/data'
   }
 }

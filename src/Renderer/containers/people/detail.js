@@ -31,7 +31,7 @@ class Detail extends Component {
     if(this.props.params){
       this.props.dispatch(fetch(this.props.params.id))
     }
-  }
+}
   handleSubmit = (data) => {
     const { selectedItem } = this.props.document;
     if(selectedItem){
@@ -40,11 +40,26 @@ class Detail extends Component {
     this.props.dispatch(save(data));
     this.props.dispatch(push('people'))
   }
-  render () {
+
+  renderForm () {
     const { selectedItem } = this.props.document;
+
+    if(this.props.params.id && !selectedItem._id) {
+      return null;
+    }
+
+    return <Form 
+      {...this.props.document} 
+      {...selectedItem} 
+      ref='form' 
+      onSubmit={::this.handleSubmit} 
+    />
+  }
+
+  render () {
     return (
       <div>
-        <Form {...this.props.document} {...selectedItem} ref='form' onSubmit={::this.handleSubmit} />
+        {this.renderForm()}
       </div>
     );
   }

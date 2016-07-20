@@ -74,8 +74,8 @@ export default function reducer(state = INITIAL_STATE, action) {
     case FETCH_ITEM:
       return {
         ...state,
-        selectedItem : { ...state.items.find(x => x._id === action.id) },
-        showDialog : true
+        selectedItem : action.selectedItem,
+        isLoading : false
       };
     case SELECT:
       let selectItems = updateArray(state.items, {

@@ -38,7 +38,16 @@ export function select(document) {
 }
 
 export function fetch(id) {
-  return { type: FETCH_ITEM, id };
+  return async (dispatch) => {
+    dispatch({ type: FETCH_REQUEST });
+    try {
+      const selectedItem = await documentApi.getAll({ _id: id });    
+      dispatch({ type: FETCH_ITEM, selectedItem: selectedItem[0] });
+      dispatch({ type: FETCH_SUCCESS });
+    } catch (error) {
+      dispatch({ type: FETCH_FAIL, error });
+    }
+  };
 }
 
 export function toggleShowDialog() {

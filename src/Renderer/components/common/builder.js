@@ -84,7 +84,11 @@ export const builder = (formFields, model, props) => {
       break;
     }
 
-    return <Col key={i} xs={Number(x.col) || 12}>{builtField}</Col>;
+    const fieldColumn = x.col 
+    ? x.col
+    : { xs: 12 };
+
+    return <Col key={i} {...fieldColumn} >{builtField}</Col>;
   });
 
   return <Row middle="xs">

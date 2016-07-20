@@ -10,10 +10,14 @@ export default class SelectableTextField extends React.Component {
   handleChange(e) {
     this.setState({value : e.currentTarget.value});
   }
+  onBlur (e) {
+    this.props.onBlur(e.target.value);
+    this.props.onCustomBlur(e.target.value);
+  }
   render() {
     return (
       <TextField
-          fullWidth
+          fullWidth          
           floatingLabelText={this.props.hintText}
           {...this.props}
           multiLine={false}
@@ -22,6 +26,7 @@ export default class SelectableTextField extends React.Component {
             this.props.mask
               ? <InputMask
                   mask={this.props.mask}
+                  onBlur={::this.onBlur}
                   onChange={::this.handleChange}
                   value={this.state.value} />
               : undefined

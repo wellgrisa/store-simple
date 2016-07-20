@@ -67,7 +67,6 @@ class People extends Component {
   }  
 
   onPrintClick () {
-    //ipcRenderer.send('toggle-insert-view', this.buildComposedSearch());
     this.props.dispatch(menuClicked({ key: 'report-people' }));
     this.props.dispatch(push('people/report'));
   }

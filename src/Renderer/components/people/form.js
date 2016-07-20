@@ -5,7 +5,7 @@ import { validate } from './validation';
 //import { Grid, Row } from 'react-inline-grid';
 import { builder } from '../common/builder';
 import {orange500, blue500} from 'material-ui/styles/colors';
-
+import moment from 'moment';
 import {Grid, Row, Col} from 'react-flexbox-grid';
 
 import {
@@ -22,6 +22,12 @@ const styles = {
   initialValues: reducers.document.selectedItem
 }), { addValue : addArrayValue } )
 export default class Form extends React.Component {
+
+  componentWillMount () {
+    const { fields } = this.props;    
+    fields['date-of-birth'].onCustomBlur = this.onDateOfBirthBlur.bind(this);
+  }
+
   componentDidUpdate(){
     window.dispatchEvent(new Event('resize'));
   }
@@ -37,10 +43,20 @@ export default class Form extends React.Component {
 
   isNumeric(value){
     return !isNaN(value) && value;
+  }  
+
+  onDateOfBirthBlur (date) {
+    const editingDate = moment(date, "DD/MM/YYYY", true);
+    if(editingDate.isValid()){
+      this.props.fields.age.onChange(moment().diff(editingDate, 'years'));
+    }else{
+      this.props.fields.age.onChange('');
+    }
   }
 
   render () {
     const { fields } = this.props;
+    
     return (
       <form>
         <Grid className='grid'>
