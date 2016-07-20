@@ -23,6 +23,10 @@ class Detail extends Component {
         action : () => this.refs.form.submit()
       },
       {
+        label : 'print',
+        action : () => this.onPrintClick() 
+      },
+      {
         label : 'undo',
         action : () => this.props.dispatch(goBack())
       },
@@ -31,7 +35,12 @@ class Detail extends Component {
     if(this.props.params){
       this.props.dispatch(fetch(this.props.params.id))
     }
-}
+  }
+
+  onPrintClick () {
+    this.props.dispatch(push(`person/${this.props.document.selectedItem._id}/edit/report`));
+  }
+  
   handleSubmit = (data) => {
     const { selectedItem } = this.props.document;
     if(selectedItem){

@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { getAll } from '../../actions/document';
 import { setToolbarButtons, setToolbarCustomGroup } from '../../actions/app';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
+import { push, goBack } from 'react-router-redux';
 import {
   Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn,
   Paper
@@ -12,7 +12,7 @@ import classnames from 'classnames';
 import { ipcRenderer } from 'electron';
 
 
-class Report extends Component {
+class ListReport extends Component {
 
   constructor(props) {
     super(props);
@@ -33,6 +33,10 @@ class Report extends Component {
       {
         label : 'print',
         action : () => this.onPrintClick() 
+      },
+      {
+        label : 'undo',
+        action : () => this.props.dispatch(goBack())
       },
     ]);
 
@@ -79,8 +83,8 @@ class Report extends Component {
       </div>
     );
   }
-}classnames
+}
 
 export default connect(reducers => ({
   document : reducers.document
-}))(Report);
+}))(ListReport);

@@ -18,7 +18,7 @@ const styles = {
   }
 };
 
-@reduxForm({ form : 'people', fields : [...fields, 'totalIncome'], validate }, reducers => ({
+@reduxForm({ form : 'people', fields : [...fields, 'totalIncome', 'incomePerPerson'], validate }, reducers => ({
   initialValues: reducers.document.selectedItem
 }), { addValue : addArrayValue } )
 export default class Form extends React.Component {
@@ -33,8 +33,18 @@ export default class Form extends React.Component {
   }
 
   getPersonIncome(){
-    const { values } = this.props;
+    const { values } = this.props;        
     return values.dependents.reduce((x, y) => x + this.getNumericValue(y.income), this.getNumericValue(values.income));
+  }
+
+  getIncomePerPerson () {
+    const { values } = this.props;
+
+    const totalIncome = this.getPersonIncome();
+    
+    return values.dependents.length 
+      ? (totalIncome / (values.dependents.length + 1)).toFixed(2)
+      : totalIncome.toFixed(2);
   }
 
   getNumericValue(value){
@@ -61,7 +71,7 @@ export default class Form extends React.Component {
       <form>
         <Grid className='grid'>
           <Row>
-            <Col xsOffset={10} xs={2} >
+            <Col xsOffset={8} xs={2} >
               <TextField
                 floatingLabelText='Renda Total'
                 disabled
@@ -71,6 +81,18 @@ export default class Form extends React.Component {
                 underlineStyle={{ borderBottomStyle : 'none' }}
                 {...fields['totalIncome']}
                 value={this.getPersonIncome().toFixed(2)}
+              />
+            </Col>
+            <Col xs={2}>
+              <TextField
+                floatingLabelText='Por Pessoa'
+                disabled
+                style={{ fontSize : '25px' }}
+                floatingLabelFocusStyle={{ textAlign : 'right'}}
+                floatingLabelStyle={styles.floatingLabelStyle}
+                underlineStyle={{ borderBottomStyle : 'none' }}
+                {...fields['incomePerPerson']}
+                value={this.getIncomePerPerson()}
               />
             </Col>
             { builder(fields, model, this.props) }

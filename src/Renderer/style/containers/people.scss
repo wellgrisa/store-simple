@@ -38,6 +38,14 @@ body{
   padding: 24px;
   position: relative;
   width: 80%;
+
+  span, input {
+    color: rgb(48, 48, 48) !important;
+  }
+  .form-dynamic-children > div {
+	  border-bottom: 1px solid rgb(48, 48, 48) !important;
+    padding-bottom: 5px;
+  }
 }
 .letter:before, .letter:after {
   content: "";

@@ -1,6 +1,2 @@
-{"name":"oooo","number":"1111","date-of-birth":"24/05/1989","age":27,"dependents":[],"_id":"F2oxAbuiU7dVZdJQ","createdAt":{"$$date":1468968818030},"updatedAt":{"$$date":1468973981001}}
-{"name":"asasasa","job":"","address":"","number":"","neighborhood":"","rg":"","cpf":"","date-of-birth":"24/05/1989","age":27,"dependents":[],"_id":"meXNw9FD8bETbYdg","createdAt":{"$$date":1468975686259},"updatedAt":{"$$date":1468975686259}}
-{"$$deleted":true,"_id":"meXNw9FD8bETbYdg"}
-{"name":"oooooooooo","number":"1111","date-of-birth":"24/05/1989","age":27,"dependents":[],"_id":"F2oxAbuiU7dVZdJQ","createdAt":{"$$date":1468968818030},"updatedAt":{"$$date":1468975694474}}
-{"name":"oooooooooo","address":"","number":"1111","cpf":"787-878-787.87","date-of-birth":"24/05/1989","age":27,"dependents":[],"_id":"F2oxAbuiU7dVZdJQ","createdAt":{"$$date":1468968818030},"updatedAt":{"$$date":1468975701309}}
-{"name":"oooooooooo","address":"","number":"1111","cpf":"787-878-787.87","date-of-birth":"24/05/1989","age":27,"genre":"0","dependents":[],"_id":"F2oxAbuiU7dVZdJQ","createdAt":{"$$date":1468968818030},"updatedAt":{"$$date":1468975707176}}
+{"name":"um","dependents":[{"name":"oi","list":0}],"_id":"SEv6GCsuwuFavNAo","createdAt":{"$$date":1469056042024},"updatedAt":{"$$date":1469056042024}}
+{"name":"Test","job":"profissão","address":"endereço","number":"1234","neighborhood":"Bairro","rg":"13213212","cpf":"321-231-321.23","date-of-birth":"24/05/1989","age":27,"genre":"0","income":"100","dependents":[{"name":"Nome","rg":"12313213","list":1,"income":"121"}],"_id":"yQmAjtL6Dh0Q914v","createdAt":{"$$date":1469053060750},"updatedAt":{"$$date":1469056429458}}

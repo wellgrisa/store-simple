@@ -51,6 +51,7 @@ module.exports = {
     },
     plugins: [
       new webpack.HotModuleReplacementPlugin(),
+      new webpack.ContextReplacementPlugin(/any-promise$/, /^$/),
       new webpack.ProvidePlugin({
         $: 'jquery',
         jQuery: 'jquery',

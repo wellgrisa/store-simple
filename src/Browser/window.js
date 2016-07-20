@@ -97,7 +97,7 @@ const savePDF = () => {
 
 const pdfDefaultSettings = {
   landscape: false,
-  marginsType: 0,
+  marginsType: 1,
   printBackground: false,
   printSelectionOnly: false,
   pageSize: 'A4',
