@@ -135,12 +135,21 @@ export const model = {
       },
     },
     {
+      type : 'Text',
+      key : 'cep',
+      hintText : 'CEP',
+      col : {
+        xs: 3
+      },
+      mask : '11111-111'
+    },
+    {
       type : 'TextIcon',
       key : 'income',
       hintText : 'Renda 0.00',
       col : {
         xs: 2,
-        xsOffset: 6
+        xsOffset: 3
       },
       icon : 'attach_money'
     },
