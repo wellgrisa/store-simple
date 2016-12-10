@@ -60,7 +60,7 @@ module.exports = {
         'Hammer': 'hammerjs/hammer',
       }),
       new HtmlWebpackPlugin({
-        template: 'src/renderer/index.html',
+        template: './src/renderer/index.html',
       }),
     ],
     resolve: {
