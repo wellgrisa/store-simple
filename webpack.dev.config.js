@@ -50,6 +50,7 @@ module.exports = {
         ]
     },
     plugins: [
+      new webpack.IgnorePlugin(/vertx/),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.ContextReplacementPlugin(/any-promise$/, /^$/),
       new webpack.ProvidePlugin({
