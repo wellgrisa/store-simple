@@ -18,13 +18,12 @@ import {
   Drawer
 } from 'material-ui';
 import classnames from 'classnames';
-
 import InputMask from 'react-maskedinput';
-
 import {Grid, Row, Col} from 'react-flexbox-grid';
-
 import { ipcRenderer } from 'electron';
+import debounce from 'debounce';
 
+import './people.scss';
 
 class People extends Component {
 
@@ -35,6 +34,7 @@ class People extends Component {
       printMode: false
     };
     this.searchTerm = {};
+    this.onSearchChangeDebounced = debounce(this.onQuickSearchChanged, 1200);
   }
 
   static contextTypes = {
@@ -55,7 +55,7 @@ class People extends Component {
       },
       {
         label : 'print',
-        action : () => this.onPrintClick() 
+        action : () => this.onPrintClick()
       },
     ]);
 
@@ -64,7 +64,7 @@ class People extends Component {
 
   componentWillUnmount() {
     this.props.dispatch(reset());
-  }  
+  }
 
   onPrintClick () {
     this.props.dispatch(menuClicked({ key: 'report-people' }));
@@ -79,7 +79,7 @@ class People extends Component {
     if(prevProps.document.selectedLength !== this.props.document.selectedLength){
       this.context.setToolbarButtons(this.getToolbarButtons());
     }
-  }  
+  }
 
   onQuickSearchChanged(){
     let value = this.quickSearch.getValue();
@@ -100,11 +100,11 @@ class People extends Component {
       let value = this.searchTerm[y].getValue();
       if(value){
         x.push({ [y] : { $regex : new RegExp(value, 'ig') }})
-      } 
+      }
       return x;
     },[]);
-    
-    let searchTerm = searchCriteria.length > 1 
+
+    let searchTerm = searchCriteria.length > 1
       ? { $or : searchCriteria }
       : searchCriteria[0];
 
@@ -113,8 +113,8 @@ class People extends Component {
 
   getSearchGroupAction() {
     return [ <ToolbarGroup style={{ width : '100%' }}>
-      <FontIcon 
-        style={{ float : 'left' }} 
+      <FontIcon
+        style={{ float : 'left' }}
         onTouchTap={this.handleToggle}
         className="material-icons">search
       </FontIcon>
@@ -122,7 +122,7 @@ class People extends Component {
         style={{ float : 'left' }}
         fullWidth
         ref={node => this.quickSearch = node}
-        onChange={::this.onQuickSearchChanged}
+        onChange={::this.onSearchChangeDebounced}
         hintText="Busca"
       />
     </ToolbarGroup> ];
@@ -159,7 +159,7 @@ class People extends Component {
   }
 
   renderDocuments() {
-    
+
     const listItems = this.props.document.items.map(x => {
       return <ListItem
         key={x._id}
@@ -183,7 +183,7 @@ class People extends Component {
       <AppBar title="Filtrar por:" />
       <Grid className='grid'>
         <Row>
-          <Col>                
+          <Col>
             <TextField
               style={{ float : 'left' }}
               fullWidth
@@ -215,9 +215,11 @@ class People extends Component {
   }
 
   render () {
+    const { document } = this.props;
     return (
-      <div style={{ marginTop : 30 }}>
+      <div className="people-container" style={{ marginTop : 30 }}>
         <div className={classnames('container', this.state.printMode ? 'print-mode' : '')}>
+          <h2>Total: {document && document.items && document.items.length}</h2>
           {this.renderDocuments()}
           {this.renderFilterDrawer()}
         </div>

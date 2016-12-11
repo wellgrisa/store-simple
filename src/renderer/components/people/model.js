@@ -29,7 +29,7 @@ export const dependent = {
       type : 'Select',
       key : 'list',
       hintText : 'Parentesco',
-      source : ['Conjugê', 'Filho'],
+      source : ['Conjugê', 'Filho (a)', 'Neto (a)', 'Tio (a)', 'Mãe', 'Pai', 'Avô', 'Avó', 'Outro'],
       col : {
         xs: 3
       },
@@ -74,12 +74,29 @@ export const model = {
     },
     {
       type : 'Text',
+      key : 'complement',
+      hintText : 'Complemento',
+      col : {
+        xs: 4
+      },
+    },
+    {
+      type : 'Text',
       key : 'number',
       hintText : 'Número',
       col : {
         xs: 2
       },
       mask : '1111'
+    },
+    {
+      type : 'Text',
+      key : 'cep',
+      hintText : 'CEP',
+      col : {
+        xs: 2
+      },
+      mask : '11111-111'
     },
     {
       type : 'Text',
@@ -135,21 +152,11 @@ export const model = {
       },
     },
     {
-      type : 'Text',
-      key : 'cep',
-      hintText : 'CEP',
-      col : {
-        xs: 3
-      },
-      mask : '11111-111'
-    },
-    {
       type : 'TextIcon',
       key : 'income',
       hintText : 'Renda 0.00',
       col : {
         xs: 2,
-        xsOffset: 3
       },
       icon : 'attach_money'
     },

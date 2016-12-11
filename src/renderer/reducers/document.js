@@ -47,12 +47,13 @@ export default function reducer(state = INITIAL_STATE, action) {
           ]
       return {
         ...state,
-        items
+        items: sortAlphabetically(items),
       };
     case ALL:
+      const allItems = action.searchTerm ? action.items.filter(action.searchTerm) : action.items;
       return {
         ...state,
-        items : action.searchTerm ? action.items.filter(action.searchTerm) : action.items,
+        items: sortAlphabetically(allItems),
         isLoading : false,
       };
     case TOGGLE_SHOW_DIALOG:
@@ -100,3 +101,10 @@ const updateArray = (array, item) => {
     ...array.slice(selectedItemIndex + 1)
   ]
 }
+
+const sortAlphabetically = items => items
+  .sort(({ name: prev }, { name: next }) => {
+    const textPrev = prev.toLowerCase();
+    const textNext = next.toLowerCase();
+    return (textPrev < textNext) ? -1 : (textPrev > textNext) ? 1 : 0
+  });

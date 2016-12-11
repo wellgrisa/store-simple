@@ -91,6 +91,23 @@ export const model = {
     },
     {
       type : 'Text',
+      key : 'cep',
+      hintText : 'CEP',
+      col : {
+        xs: 2
+      },
+      mask : '11111-111'
+    },
+    {
+      type : 'Text',
+      key : 'complement',
+      hintText : 'Complemento',
+      col : {
+        xs: 4
+      },
+    },
+    {
+      type : 'Text',
       key : 'rg',
       hintText : 'RG',
       col : {
@@ -140,7 +157,6 @@ export const model = {
       hintText : 'Renda',
       col : {
         xs: 2,
-        xsOffset: 6
       },
       icon : 'attach_money'
     },
