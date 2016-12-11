@@ -1,9 +1,8 @@
 import { resolve } from 'path';
-import { ipcMain, BrowserWindow, dialog } from 'electron';
+import { ipcMain, BrowserWindow, dialog, remote } from 'electron';
 import { attachMenuToWindow } from './menu';
 import { get as getConfig } from './config';
 import fs from 'fs';
-import autoUpdater from 'auto-updater';
 
 const devMode = (process.argv || []).indexOf('--dev') !== -1;
 
@@ -12,6 +11,8 @@ const WINDOWS = {};
 let mainWindow = null;
 
 let windowsNumber = 0;
+
+const { autoUpdater } = remote;
 
 export function buildNewWindow(app) {
   const appConfig = getConfig();
@@ -34,12 +35,12 @@ export function buildNewWindow(app) {
 
   mainWindow.on('closed', () => delete WINDOWS[windowsNumber]);
 
-  if (devMode) {    
+  if (devMode) {
     mainWindow.openDevTools();
   } else{
-    mainWindow.webContents.on("did-frame-finish-load", () => {    
+    mainWindow.webContents.on("did-frame-finish-load", () => {
       checkUpdate();
-    })    
+    })
   }
 }
 
@@ -64,7 +65,7 @@ const checkUpdate = () => {
     .on('update-downloaded', function() {
       mainWindow.webContents.send('update:hotMessage', 'Atualização baixada com sucesso ;)');
       autoUpdater.quitAndInstall();
-    });  
+    });
 }
 
 ipcMain.on('print-view', (event, arg) => {
