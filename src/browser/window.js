@@ -1,8 +1,10 @@
 import { resolve } from 'path';
-import { ipcMain, BrowserWindow, dialog, remote } from 'electron';
+import electron, { ipcMain, BrowserWindow, dialog } from 'electron';
 import { attachMenuToWindow } from './menu';
 import { get as getConfig } from './config';
 import fs from 'fs';
+
+const autoUpdater = require('electron').autoUpdater;
 
 const devMode = (process.argv || []).indexOf('--dev') !== -1;
 
@@ -11,8 +13,6 @@ const WINDOWS = {};
 let mainWindow = null;
 
 let windowsNumber = 0;
-
-const { autoUpdater } = remote;
 
 export function buildNewWindow(app) {
   const appConfig = getConfig();

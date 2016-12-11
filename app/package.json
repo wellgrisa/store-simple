@@ -1,6 +1,6 @@
 {
   "name": "storesimple",
-  "version": "1.3.1",
+  "version": "1.3.3",
   "author": "Wellington Grisa <wellington.grisa@gmail.com>",
   "description": "This is the first version of a simple storage app.",
   "main": "./out/browser/main.js",
@@ -13,7 +13,6 @@
   },
   "license": "ISC",
   "dependencies": {
-    "auto-updater": "^0.1.0",
     "debug": "^2.2.0",
     "babel": "^5.8.23",
     "babel-core": "^5.8.38",
