@@ -3,6 +3,7 @@ npm-debug.log
 node_modules
 static
 src/data/*json
+src/renderer/data/*json
 .vscode/
 dist/
 app/out
