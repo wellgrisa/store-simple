@@ -15,7 +15,7 @@ import {Grid, Row, Col} from 'react-flexbox-grid';
 export const builder = (model, metadata) => {
 
   let builtElements = model.fields.map((x, i) => {
-    
+
     if(metadata[x.key] === undefined){
       return null;
     }
@@ -29,7 +29,7 @@ export const builder = (model, metadata) => {
       case 'TextIcon':
       case 'Date':
         metadataValue += metadata[x.key];
-        builtField = <TextField 
+        builtField = <TextField
           name={x.key}
           defaultValue={metadataValue}
           underlineShow={false}
@@ -38,8 +38,8 @@ export const builder = (model, metadata) => {
         break;
       case 'RadioGroup':
       case 'Select':
-        metadataValue += x.source[metadata[x.key]]; 
-        builtField = <TextField 
+        metadataValue += x.source[metadata[x.key]];
+        builtField = <TextField
           name={x.key}
           defaultValue={metadataValue}
           underlineShow={false}
@@ -51,7 +51,7 @@ export const builder = (model, metadata) => {
           builtField = buildList(metadata[x.key], x);
         }
         break;
-      
+
       default:
         metadataValue += metadata[x.key];
         builtField = <TextField
@@ -63,7 +63,7 @@ export const builder = (model, metadata) => {
       break;
     }
 
-    const fieldColumn = x.col 
+    const fieldColumn = x.col
     ? x.col
     : { xs: 12 };
 

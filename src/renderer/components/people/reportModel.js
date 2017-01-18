@@ -13,7 +13,7 @@ export const dependent = {
       key : 'name',
       hintText : 'Nome',
       col : {
-        xs: 3
+        xs: 7
       },
     },
     {
@@ -21,7 +21,7 @@ export const dependent = {
       key : 'rg',
       hintText : 'RG',
       col : {
-        xs: 2
+        xs: 3
       },
       mask : '11111111'
     },
@@ -31,7 +31,7 @@ export const dependent = {
       hintText : 'Parentesco',
       source : ['Conjugê', 'Filho'],
       col : {
-        xs: 3
+        xs: 4
       },
     },
     {
@@ -39,6 +39,7 @@ export const dependent = {
       key : 'income',
       hintText : 'Renda',
       col : {
+        xsOffset: 4,
         xs: 2
       },
       icon : 'attach_money'
@@ -69,7 +70,7 @@ export const model = {
       key : 'address',
       hintText : 'Endereço',
       col : {
-        xs: 6
+        xs: 7
       },
     },
     {
@@ -94,7 +95,7 @@ export const model = {
       key : 'cep',
       hintText : 'CEP',
       col : {
-        xs: 2
+        xs: 3
       },
       mask : '11111-111'
     },
@@ -103,7 +104,7 @@ export const model = {
       key : 'complement',
       hintText : 'Complemento',
       col : {
-        xs: 4
+        xs: 5
       },
     },
     {
@@ -120,7 +121,7 @@ export const model = {
       key : 'cpf',
       hintText : 'CPF',
       col : {
-        xs: 3
+        xs: 4
       },
       mask : '111-111-111.11'
     },
@@ -129,7 +130,7 @@ export const model = {
       key : 'date-of-birth',
       hintText : 'Nascimento',
       col : {
-        xs: 3
+        xs: 5
       },
       mask : '11/11/1111'
     },

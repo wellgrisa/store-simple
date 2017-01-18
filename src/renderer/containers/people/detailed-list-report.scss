@@ -1,0 +1,15 @@
+.detailed-report{
+  .detailed-person-row {
+    border-bottom: 1px solid rgb(0, 188, 212);
+    margin-bottom: 30px;
+  }
+
+  .letter .form-dynamic-children {
+    & > div {
+      border-bottom: none !important;
+    }
+    hr {
+      height: 0px !important;
+    }
+  }
+}

@@ -5,12 +5,18 @@ import { connect } from 'react-redux';
 import { push, goBack } from 'react-router-redux';
 import {
   Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn,
-  Paper
+  Paper, Divider
 } from 'material-ui';
 import classnames from 'classnames';
 
+import { Grid, Row, Col } from 'react-flexbox-grid';
+
+import { builder } from '../../components/common/reportBuilder';
+import { model } from '../../components/people/reportModel';
+
 import { ipcRenderer } from 'electron';
 
+import './detailed-list-report.scss';
 
 class ListReport extends Component {
 
@@ -49,34 +55,23 @@ class ListReport extends Component {
 
   renderDocuments() {
 
-    const listItems = this.props.document.items.map(person => (<TableRow key={person._id}>
-        <TableRowColumn>{person.name}</TableRowColumn>
-        <TableRowColumn>{person.cpf}</TableRowColumn>
-        <TableRowColumn>{person.income}</TableRowColumn>
-      </TableRow>
-      )
-    );
+    const listItems = this.props.document.items.map(person => (
+      <Row className="detailed-person-row" key={person._id}>
+        <Col xs={12}>
+          <div>{ builder(model, person) } </div>
+        </Col>
+        <Divider style={{ backgroundColor : 'rgb(48, 48, 48)', marginTop : 20 }} />
+      </Row>
+    ));
 
-    return <Table>
-      <TableHeader
-        displaySelectAll={false}
-        adjustForCheckbox={false}>
-        <TableRow>
-          <TableHeaderColumn>Nome</TableHeaderColumn>
-          <TableHeaderColumn>CPF</TableHeaderColumn>
-          <TableHeaderColumn>Renda</TableHeaderColumn>
-        </TableRow>
-      </TableHeader>
-      <TableBody
-         displayRowCheckbox={false}>
-        {listItems}
-      </TableBody>
-    </Table>;
+    return <Grid>
+      {listItems}
+    </Grid>;
   }
 
   render () {
     return (
-      <div style={{ marginTop : 50 }}>
+      <div className="detailed-report" style={{ marginTop : 50 }}>
         <div className='container letter'>
           {this.renderDocuments()}
         </div>

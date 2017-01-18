@@ -55,7 +55,11 @@ class People extends Component {
       },
       {
         label : 'print',
-        action : () => this.onPrintClick()
+        action : () => this.onPrintClick('report')
+      },
+      {
+        label : 'account_circle',
+        action : () => this.onPrintClick('detailed-report')
       },
     ]);
 
@@ -66,9 +70,9 @@ class People extends Component {
     this.props.dispatch(reset());
   }
 
-  onPrintClick () {
+  onPrintClick (route) {
     this.props.dispatch(menuClicked({ key: 'report-people' }));
-    this.props.dispatch(push('people/report'));
+    this.props.dispatch(push(`people/${route}`));
   }
 
   onSelect (document) {

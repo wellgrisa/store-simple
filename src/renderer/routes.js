@@ -1,13 +1,14 @@
 import React from 'react';
 import { Router, Route, IndexRoute } from 'react-router';
-import { 
-  App, 
-  About, 
-  Home, 
-  People, 
-  PersonDetail, 
-  PeopleListReport, 
-  PeopleEditReport 
+import {
+  App,
+  About,
+  Home,
+  People,
+  PersonDetail,
+  PeopleListReport,
+  PeopleEditReport,
+  PeopleDetailedListReport,
 } from './containers';
 
 export default (
@@ -16,6 +17,7 @@ export default (
     <Route path="/people" component={People} />
     <Route path="/person/add" component={PersonDetail} />
     <Route path="/people/report" component={PeopleListReport} />
+    <Route path="/people/detailed-report" component={PeopleDetailedListReport} />
     <Route path="/person/edit" component={PersonDetail} />
     <Route path="/person/:id/edit/report" component={PeopleEditReport} />
     <Route path="/person/:id/edit" component={PersonDetail} />

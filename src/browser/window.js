@@ -79,7 +79,7 @@ const savePDF = () => {
   }
   dialog.showSaveDialog(mainWindow, {}, function(file_path) {
     if (file_path) {
-      mainWindow.printToPDF(pdfDefaultSettings, function(err, data) {
+      mainWindow.webContents.printToPDF(pdfDefaultSettings, function(err, data) {
         if (err) {
           dialog.showErrorBox('Error', err);
           return;
